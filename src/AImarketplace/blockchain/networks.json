@@ -1,0 +1,98 @@
+[
+	{
+		"chainId": 1,
+		"name": "Ethereum Mainnet",
+		"symbol": "ETH",
+		"decimals": 18,
+		"rpc": "https://mainnet.infura.io/v3/",
+		"explorer": "https://etherscan.io"
+	},
+	{
+		"chainId": 5,
+		"name": "Goerli test network",
+		"symbol": "GoerliETH",
+		"decimals": 18,
+		"rpc": "https://goerli.infura.io/v3/",
+		"explorer": "https://etherscan.io"
+	},
+	{
+		"chainId": 11155111,
+		"name": "sepolia",
+		"symbol": "SEP",
+		"decimals": 18,
+		"rpc": "https://ethereum-sepolia.blockpi.network/v1/rpc/public",
+		"explorer": "https://sepolia.etherscan.io"
+	},
+	{
+		"chainId": 7744,
+		"name": "PhronAI",
+		"symbol": "PHRON",
+		"decimals": 18,
+		"rpc": "https://testnet.phron.ai",
+		"explorer": "https://testnet.phronscan.io"
+	},
+	{
+		"chainId": 56,
+		"name": "Binance Smart Chain Mainnet",
+		"symbol": "BNB",
+		"decimals": 18,
+		"rpc": "https://bsc-dataseed1.binance.org",
+		"explorer": "https://bscscan.com"
+	},
+	{
+		"chainId": 97,
+		"name": "Binance Smart Chain Testnet",
+		"symbol": "tBNB",
+		"decimals": 18,
+		"rpc": "https://data-seed-prebsc-1-s1.binance.org:8545",
+		"explorer": "https://testnet.bscscan.com"
+	},
+	{
+		"chainId": 250,
+		"name": "Fantom Opera",
+		"symbol": "FTM",
+		"decimals": 18,
+		"rpc": "https://endpoints.omniatech.io/v1/fantom/mainnet/public",
+		"explorer": "https://ftmscan.com"
+	},
+	{
+		"chainId": 4002,
+		"name": "Fantom Testnet",
+		"symbol": "FTM",
+		"decimals": 18,
+		"rpc": "https://fantom-testnet.public.blastapi.io",
+		"explorer": "https://testnet.ftmscan.com"
+	},
+	{
+		"chainId": 421613,
+		"name": "Arbitrum Goerli",
+		"symbol": "AGOR",
+		"decimals": 18,
+		"rpc": "https://goerli-rollup.arbitrum.io/rpc",
+		"explorer": "https://goerli.arbiscan.io"
+	},
+	{
+		"chainId": 351,
+		"name": "mugambo testnet",
+		"symbol": "MBR",
+		"decimals": 18,
+		"rpc": "https://test-rpc.mugambo.org",
+		"explorer": "https://test-explorer.mugambo.org/"
+	},
+	{
+		"chainId": 421614,
+		"name": "arbitrum_sepolia",
+		"symbol": "ASEP",
+		"decimals": 18,
+		"rpc": "https://arbitrum-sepolia.gateway.tenderly.co",
+		"explorer": "https://sepolia.arbiscan.io/"
+	},
+	{
+		"chainId": 350,
+		"name": "nova",
+		"symbol": "NOVA",
+		"decimals": 18,
+		"rpc": "https://rpc.novatoken.fr",
+		"explorer": "https://explorer.novatoken.fr/"
+	}
+]

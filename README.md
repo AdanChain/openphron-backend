@@ -1,0 +1,51 @@
+# Project Title
+   OpenPhron
+## Description
+
+OpenPhron Marketplace  provides a platform for users to explore various AI oracles and create smart contracts based on their ideas. The application consists of an AI Library for browsing oracles and a Workflow section for contract creation.
+
+## Features
+
+- **OracleList**
+- **Oracle subscription**
+- **Smart Contract Creation**
+
+## Installation
+
+1. Clone the repository:
+
+2. Install dependencies:
+   
+  ```bash
+  npm install
+  ```
+   
+
+3. Set up environment variables:
+   
+   -**DBNAME** : your-db-name.
+   
+   -**GEMINI_KEY** : your-GEMINI_KEY.
+   https://ai.google.dev/gemini-api/docs/api-key
+   
+   -**PROXY_ENABLE** : if you want to use proxy, you must set true PROXY_ENABLE.
+
+   --**PROXY_HOST** : your-proxy-host.
+   
+   --**PROXY_PASS** : your-proxy-pass.
+   
+   --**PROXY_USER** : your-prosy-user.
+   
+   -**RPC URL**: Arbitrum Sepolia RPC
+   
+
+5. Run the application:
+
+   Start the Server
+   ```bash
+   npm run dev
+   ```
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
