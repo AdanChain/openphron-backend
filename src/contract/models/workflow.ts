@@ -8,7 +8,8 @@ const AssistorSchema = new Schema({
         type: Number,
         default: 0
     },
-    isAuto: Boolean
+    isAuto: Boolean,
+    action: Boolean
 })
 
 const WorkflowSchema = new Schema({

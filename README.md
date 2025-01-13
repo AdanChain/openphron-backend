@@ -14,11 +14,15 @@ OpenPhron Marketplace  provides a platform for users to explore various AI oracl
 
 1. Clone the repository:
 
+   ```bash
+   git clone https://github.com/idealbridgex/AI-smartcontract-builder/tree/main/backend
+   ```
+
 2. Install dependencies:
    
-  ```bash
-  npm install
-  ```
+   ```bash
+   npm install
+   ```
    
 
 3. Set up environment variables:
@@ -36,7 +40,9 @@ OpenPhron Marketplace  provides a platform for users to explore various AI oracl
    
    --**PROXY_USER** : your-prosy-user.
    
-   -**RPC URL**: Arbitrum Sepolia RPC
+   -**RPC_URL**: Arbitrum Sepolia RPC.
+
+   -**PORT**: 9001.
    
 
 5. Run the application:

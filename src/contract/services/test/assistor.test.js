@@ -7,7 +7,7 @@ const { contractWorkflow } = require("../../config");
 
 describe('assistor test', () => {
     beforeAll(async () => {
-        await dbConnect("testdb-assistor-12-15");
+        await dbConnect();
 
         await workflowService.add(contractWorkflow);
     });

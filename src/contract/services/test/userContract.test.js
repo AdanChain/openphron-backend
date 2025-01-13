@@ -10,7 +10,7 @@ const { prettyJSON } = require("../../utils");
 describe('userContract test', () => {
     let userContract;
     beforeAll(async () => {
-        await dbConnect("testdb-usercontract-12-15");
+        await dbConnect();
         await workflowService.add(contractWorkflow);
     });
 

@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-require("dotenv").config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const dbConnect = async (dbName: string = process.env.DBNAME || "defaultDB") => {
     try {

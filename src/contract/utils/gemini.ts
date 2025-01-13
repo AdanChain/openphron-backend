@@ -13,28 +13,29 @@ class GEMINI {
             role: "user",
             content: message
         }];
-        const result = await this.generateText({ contents });
-        return result;
+        const geminiContents = this._convertToGeminiFormat(contents);
+        const data: any = { contents: geminiContents}
+        return this._generateFromGemini(data)
     }
 
     async generateText({ contents, instruction = "" }: { contents: Content[]; instruction?: string }): Promise<string> {
         const geminiContents = this._convertToGeminiFormat(contents);
         const geminiInstruction = this._convertToInstructionFormat(instruction);
         const data: GeminiData = { contents: geminiContents, system_instruction: geminiInstruction };
-
         return this._generateFromGemini(data);
     }
 
-    private async _generateFromGemini(data: GeminiData): Promise<string> {
+    private async _generateFromGemini(data: GeminiData | any): Promise<string> {
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${this.apiKey}`;
         let response;
         const proxyAgent = this.getAgent();
+        
         if (process.env.PROXY_ENABLE) {
             response = await axios.post(apiUrl, data, {
                 httpsAgent: proxyAgent,
             });
         } else
-            response = await axios.post(apiUrl, data,);
+            response = await axios.post(apiUrl, data);
 
         const generatedContent = response.data.candidates[0].content;
         const resultText = generatedContent.parts[0].text;

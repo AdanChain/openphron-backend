@@ -6,7 +6,7 @@ const { contractWorkflow } = require("../../config");
 
 describe('workflow', () => {
     beforeAll(async () => {
-        await dbConnect("testdb-workflow-12-15");
+        await dbConnect();
     });
     afterAll(async () => {
         await mongoose.connection.dropDatabase();;

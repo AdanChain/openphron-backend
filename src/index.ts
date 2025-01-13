@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-const PORT = 9000;
+const PORT = process.env.PORT;
 
 const main = async () => {
     try {

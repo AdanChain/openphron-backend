@@ -1,11 +1,12 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const dbConnect = require("../../../mongodb");
+const dbConnect = require("../../../dbConnect");
 const { oracleService } = require("..");
+const { describe, it } = require("node:test");
 
 describe('oracle test', () => {
     beforeAll(async () => {
-        await dbConnect("testdb-12-15");
+        await dbConnect();
     });
     afterAll(async () => {
         await mongoose.connection.dropDatabase();;
@@ -18,7 +19,7 @@ describe('oracle test', () => {
             name: "test",
             description: "test",
             owner: "0x1234567890123456789012345678901234567890",
-            subscriptionPrice: 100,
+            subscriptionPrice: "100",
         });
 
         expect(oracle).toMatchObject({

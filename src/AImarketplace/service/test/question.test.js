@@ -5,7 +5,7 @@ const { questionService } = require("..");
 
 describe('question test', () => {
     beforeAll(async () => {
-        await dbConnect("testdb-12-15");
+        await dbConnect();
     });
     afterAll(async () => {
         await mongoose.connection.dropDatabase();;
