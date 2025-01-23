@@ -5,7 +5,7 @@ const workflowService = {
         await workflowsDA.create(data);
     },
     gets: async () => {
-        const result = await workflowsDA.find({});
+        const result = await workflowsDA.finds();
         return result;
     },
     getById: async (id: number) => {
