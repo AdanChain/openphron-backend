@@ -15,7 +15,7 @@ OpenPhron Marketplace  provides a platform for users to explore various AI oracl
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/idealbridgex/AI-smartcontract-builder/tree/main/backend
+   git clone https://github.com/idealbridgex/openphron-backend
    ```
 
 2. Install dependencies:
