@@ -43,6 +43,10 @@ OpenPhron Marketplace  provides a platform for users to explore various AI oracl
    -**RPC_URL**: Arbitrum Sepolia RPC.
 
    -**PORT**: 9001.
+
+   -**TOKEN_LIMIT**: daily token limit.
+
+   -**DAY_LIMIT**: subscription period.
    
 
 5. Run the application:
