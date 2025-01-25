@@ -21,7 +21,7 @@ const costService = {
         const tokenInfo = await costDA.findOne({ userAddress: address });
         let token = tokenize(message);
         if (!tokenInfo) throw new Error("You must subscribe tokens!");
-        if (tokenInfo.remainingTokens < token) throw new Error("Not enough tokens");
+        if (tokenInfo.remainingTokens < token) throw new Error("Not enough tokens!");
         if (tokenInfo.remainingDays < 0) throw new Error("Subscribe already finished!");
 
         return { tokenInfo, token };

@@ -39,6 +39,7 @@ const contractController = {
             const result = await userContractService.saveResult({ _id, stepId });
             res.json(result);
         } catch (error: any) {
+            res.json(error.message);
             console.log("save-result-error: ", error.message);
         }
     },

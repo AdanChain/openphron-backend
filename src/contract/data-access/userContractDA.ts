@@ -27,6 +27,7 @@ class UserContractDA extends BaseDataAccess {
         const userContract = await this.findOne({ _id });
 
         if (userContract && userContract.steps[stepId]) {
+            await costService.reduceTokens(userContract.userAddress, content);
             userContract.steps[stepId].result = content;
 
             // Remove the next steps
