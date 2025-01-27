@@ -1,16 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
-import { userContractsDA } from "../data-access";
+import { costDA, userContractsDA } from "../data-access";
 import assistorService from "./assistor";
 import workflowService from "./workflow";
 
 const userContractService = {
     create: async (data: CreateContractData) => {
         const { userAddress, initMessage } = data;
-        const contractName = await assistorService.nameFromText(initMessage);
+
+        const contractName = await assistorService.nameFromText(initMessage, userAddress);
         const workflow = await workflowService.getById(1);
         const assistors = workflow.assistors;
         const steps = assistors.map(() => ({ history: [] }));
-
+        
         const uniqueId = uuidv4();
         let userContract: any = {
             id: uniqueId,
@@ -26,6 +27,7 @@ const userContractService = {
             stepId: 0,
             content: initMessage
         });
+
         userContract = await userContractsDA.findOne({ _id: userContract._id });
         return userContract;
     },
@@ -35,15 +37,16 @@ const userContractService = {
         return contract;
     },
     addMessage: async (data: AddMessageData) => {
-        const { _id, stepId, content } = data;
+        const { _id, stepId, content, userAddress } = data;
 
         const message = {
             role: "user",
             content
         }
         await userContractsDA.addMessage({ _id, stepId, message });
-
         const userContract = await userContractsDA.findOne({ _id });
+
+
         const response = await assistorService.generateText({
             workflowId: userContract.workflowId,
             stepId,
@@ -55,10 +58,11 @@ const userContractService = {
             content: response
         }
         await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
-        return responseMessage;
+        return { responseMessage };
     },
+
     getContractsByUser: async (userAddress: string) => {
-        const contracts = await userContractsDA.find({ userAddress });
+        const contracts = await userContractsDA.finds({ userAddress });
         return contracts;
     },
     saveResult: async (filter: any) => {

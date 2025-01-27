@@ -26,6 +26,7 @@ interface AddMessageData {
     _id: any;
     stepId: number;
     content: string;
+    userAddress?: string;
 }
 
 interface SaveResultFilter {

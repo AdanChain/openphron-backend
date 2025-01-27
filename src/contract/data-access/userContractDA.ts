@@ -1,3 +1,5 @@
+import { costService } from "../services";
+import { tokenize } from "../utils";
 import BaseDataAccess from "./baseDataAccess";
 import { Document, Model } from "mongoose";
 
@@ -11,6 +13,8 @@ class UserContractDA extends BaseDataAccess {
         const userContract = await this.findOne({ _id });
 
         if (userContract && userContract.steps[stepId]) {
+            await costService.reduceTokens(userContract.userAddress, message.content);
+
             userContract.steps[stepId].history.push(message);
             const result = await this.update({ _id }, userContract);
             return result;
@@ -23,6 +27,7 @@ class UserContractDA extends BaseDataAccess {
         const userContract = await this.findOne({ _id });
 
         if (userContract && userContract.steps[stepId]) {
+            await costService.reduceTokens(userContract.userAddress, content);
             userContract.steps[stepId].result = content;
 
             // Remove the next steps

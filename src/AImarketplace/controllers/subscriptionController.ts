@@ -1,11 +1,10 @@
 import { subscriptionService } from "../service";
-import { Request, Response } from "express";
 
 const subscriptionController = {
 
-    getByUser: async (req: Request, res: Response) => {
+    getByUser: async (req: any, res: any) => {
         try {
-            const { userAddress } = req.params;
+            const userAddress = req.user;
             const subscriptionData = await subscriptionService.getByUser(userAddress);
             console.log("subscriptionData", userAddress)
             res.status(200).json(subscriptionData);
@@ -13,7 +12,7 @@ const subscriptionController = {
             res.status(500).json({ error: error.message });
         }
     },
-    getsByOracle: async (req: Request, res: Response) => {
+    getsByOracle: async (req: any, res: any) => {
         try {
             const { oracleId } = req.params;
             const subscriptionData = await subscriptionService.getsByOracle(oracleId);
