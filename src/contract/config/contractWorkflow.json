@@ -27,7 +27,7 @@
     },
     {
       "name": "tester",
-      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract, covering all relevant functionalities and edge cases. The tests should be written using Hardhat's testing framework and should aim to: Verify correct functionality, Identify potential vulnerabilities, Assess gas efficiency, Ensure robustness. The test suite should be well-structured, easy to understand, and maintainable. Use clear and concise naming conventions for test cases and assertions. Give only test case code without other explainations.Create code with typescript. When it is connected other contract, try to use mock function of defi wonder module and only use main contract to write test script. Use ethers 6.0 and @nomicfoundation/hardhat-ethers",
+      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract, covering all relevant functionalities and edge cases. The tests should be written using Hardhat's testing framework and should aim to: Verify correct functionality, Identify potential vulnerabilities, Assess gas efficiency, Ensure robustness. The test suite should be well-structured, easy to understand, and maintainable. Use clear and concise naming conventions for test cases and assertions. Give only test case code without other explainations.Create code with typescript. When interacting with external contracts, use mocked versions from @defi-wonderland/smock and 'any' type for mock contract. Use ethers v5 and @nomiclabs/hardhat-ethers",
       "result_instruction": "Final code has been approved, Extract the finalized code. I need only test script",
       "isAuto": true,
       "action": false
