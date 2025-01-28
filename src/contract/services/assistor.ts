@@ -1,14 +1,15 @@
+import fs from "fs";
 import { costDA, userContractsDA } from "../data-access";
 import UserContractDA from "../data-access/userContractDA";
 import { gemini } from "../utils";
 import costService from "./cost";
 import workflowService from "./workflow";
+import path from "path";
 
 const assistorService = {
     nameFromText: async (text: string, address: string): Promise<string> => {
         await costService.validateToken(address, text);
         const contractNames = await assistorService.extractAllContractNames(address);
-
         const prompt = `Summarize the following idea into one meaningful word. Provide the word alone, without any additional text or explanation, and make sure it doesn't overlap with the following word. \n
                          ${contractNames}\n ${text}`;
         const generatedName = await gemini.generateTextFromMessage(prompt);
@@ -18,7 +19,11 @@ const assistorService = {
     generateText: async (data: GenerateTextData): Promise<string> => {
         const { workflowId, stepId, history } = data;
         const assistor = await assistorService._getAssistor({ workflowId, stepId });
-        const result = await gemini.generateText({ contents: history, instruction: assistor.instruction });
+        //bring the package.json file
+        // const packageJson = assistorService._getPackageJson();
+        // const instruction = stepId === 0 ? `${assistor.instruction}` : `You are using the following package.json file: ${packageJson}\n${assistor.instruction}`;
+        // console.log(instruction);
+        const result = await gemini.generateText({ contents: history, instruction:assistor.instruction });
         return result;
     },
 
@@ -44,6 +49,11 @@ const assistorService = {
         const allContracts = await userContractsDA.finds({ userAddress: address });
         const contractNames = allContracts.map((contract: any) => contract.name);
         return contractNames.join(",");
+    },
+    _getPackageJson: () => {
+        const packageJsonPath = path.join(__dirname, "../../../../openphron-contract-compiler/package.json");
+        const packageJson = fs.readFileSync(packageJsonPath, 'utf8');
+        return packageJson;
     }
 };
 export default assistorService;

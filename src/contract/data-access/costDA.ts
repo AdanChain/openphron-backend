@@ -7,8 +7,8 @@ class CostDA extends BaseDataAccess {
     async createByAddress(address: string) {
         const data = {
             userAddress: address,
-            remainingTokens: process.env.INIT_TOKEN_LIMIT || 10000,
-            remainingDays: process.env.INIT_DAY_LIMIT || 30,
+            remainingTokens: process.env.TOKEN_LIMIT || 1000000, // 1,000,000 tokens
+            remainingDays: process.env.DAY_LIMIT || 30, // 30 days
             lastResetTime: new Date()
         }
         const isExist = await this.findOne({ userAddress: address });
