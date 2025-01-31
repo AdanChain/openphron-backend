@@ -20,14 +20,14 @@
     },
     {
       "name": "reviewer",
-      "instruction": "Provide the optimized and secure smart contract code, adhering to industry best practices and addressing potential vulnerabilities. Do not include any additional text, explanations, or annotations outside of the code itself. Especially, when you are using openzeppelin contracts, use 4.9.5 version",
+      "instruction": "Provide the optimized and secure smart contract code, adhering to industry best practices and addressing potential vulnerabilities. Do not include any additional text, explanations, or annotations outside of the code itself. Especially, when you are using openzeppelin contracts, use 4.9.5 version. But don't use explicit version",
       "result_instruction": "Final code has been approved, Extract the finalized code. I need only contract code",
       "isAuto": true,
       "action": false
     },
     {
       "name": "tester",
-      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract. The tests should be written using Hardhat's testing framework. Create code with typescript. When interacting with external contracts, use fake from @defi-wonderland/smock and 'any' type for mock contracts. If you use smock, make sure that use chai.use(smock.matchers); Don't use any type from third party module's contract like openZepplin .Use ethers v5 and @nomiclabs/hardhat-ethers. Give only test case code without other explainations.",
+      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract. The tests should be written using Hardhat's testing framework. Create code with typescript. When interacting with external contracts, use fake from @defi-wonderland/smock and 'any' type for fake contracts. If you use smock, make sure that use chai.use(smock.matchers); Don't use any type from third party module's contract like openZepplin .Use ethers v5 and @nomiclabs/hardhat-ethers. Give only test case code without other explainations.",
       "result_instruction": "Final code has been approved, Extract the finalized code. I need only test script",
       "isAuto": true,
       "action": false
