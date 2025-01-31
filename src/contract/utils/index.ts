@@ -14,3 +14,14 @@ export const tokenize = (message:string) => {
   const averageTokenLength = 4;
   return Math.ceil(message.length/averageTokenLength);
 }
+
+export const tokenNum = (id:any) => {
+  console.log(id.id)
+  if(id.id==1){
+    return 100000;
+  }
+  if(id.id==2){
+    return 10000000;
+  }
+  return 100000000;
+}

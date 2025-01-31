@@ -1,13 +1,14 @@
+import { tokenNum } from "../utils";
 import BaseDataAccess from "./baseDataAccess";
 
 class CostDA extends BaseDataAccess {
     constructor(dbModel: any) {
         super(dbModel);
     }
-    async createByAddress(address: string) {
+    async createByAddress(address: string,id:any) {
         const data = {
             userAddress: address,
-            remainingTokens: process.env.TOKEN_LIMIT || 1000000, // 1,000,000 tokens
+            remainingTokens: tokenNum(id) || 1000000, // 1,000,000 tokens
             remainingDays: process.env.DAY_LIMIT || 30, // 30 days
             lastResetTime: new Date()
         }
