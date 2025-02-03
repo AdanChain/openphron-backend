@@ -16,7 +16,9 @@ const UserContractSchema = new Schema({
     name: String,
     workflowId: String,
     steps: [StepSchema]
-})
+},
+    { timestamps: true }
+)
 
 const UserContracts = mongoose.model("userContracts", UserContractSchema);
 
