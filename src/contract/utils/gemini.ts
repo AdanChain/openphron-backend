@@ -29,7 +29,7 @@ class GEMINI {
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${this.apiKey}`;
         let response;
         const proxyAgent = this.getAgent();
-        
+
         if (process.env.PROXY_ENABLE) {
             response = await axios.post(apiUrl, data, {
                 httpsAgent: proxyAgent,
@@ -61,7 +61,7 @@ class GEMINI {
 
     private getAgent() {
         const proxyHost = process.env.PROXY_HOST;
-        const proxyPort = 8888; // Replace with your proxy's port
+        const proxyPort = 42567; // Replace with your proxy's port
         const proxyUser = process.env.PROXY_USER; // Optional
         const proxyPass = process.env.PROXY_PASS; // Optional
         // Create a proxy agent
