@@ -26,7 +26,7 @@ class GEMINI {
     }
 
     private async _generateFromGemini(data: GeminiData | any): Promise<string> {
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${this.apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`;
         let response;
         const proxyAgent = this.getAgent();
 

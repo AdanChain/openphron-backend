@@ -23,7 +23,8 @@ const costController = {
     subscribeTokens: async (req: any, res: any) => {
         try {
             const address = req.user;
-            const respose = await costService.subscribeTokens(address);
+            const id = req.body
+            const respose = await costService.subscribeTokens(address,id);
             res.json({ success: true })
         } catch (error: any) {
             console.log("subscribeToken-Error:", error.message)

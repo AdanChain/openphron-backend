@@ -3,8 +3,8 @@ import cron, { validate } from "node-cron";
 import { tokenize } from "../utils";
 
 const costService = {
-    subscribeTokens: async (address: string) => {
-        const tokenInfo = await costDA.createByAddress(address);
+    subscribeTokens: async (address: string,id:any) => {
+        const tokenInfo = await costDA.createByAddress(address,id);
         return { tokenInfo }
     },
     getTokens: async (address: string) => {
