@@ -46,7 +46,6 @@ const userContractService = {
         await userContractsDA.addMessage({ _id, stepId, message });
         const userContract = await userContractsDA.findOne({ _id });
 
-
         const response = await assistorService.generateText({
             workflowId: userContract.workflowId,
             stepId,
@@ -54,7 +53,7 @@ const userContractService = {
         });
 
         const responseMessage = {
-            role: "model",
+            role: "assistant",
             content: response
         }
         await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
