@@ -3,6 +3,7 @@ import { oracleController, questionController, subscriptionController } from "..
 import { contractController, workflowContoller } from "../contract/controllers";
 import { verifySignatureMiddleware } from "../middleware";
 import costController from "../contract/controllers/cost";
+import adminRoutes from '../admin/routes';
 const routers = express.Router();
 
 
@@ -36,5 +37,8 @@ routers.get("/question/oracle/:oracleId", verifySignatureMiddleware, questionCon
 
 routers.get("/subscription/user", verifySignatureMiddleware, subscriptionController.getByUser)
 routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscriptionController.getsByOracle)
+
+// Add admin routes
+routers.use('/admin', adminRoutes);
 
 export default routers;
