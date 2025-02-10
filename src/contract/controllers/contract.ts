@@ -79,7 +79,6 @@ const contractController = {
   },
   getDeployedContracts: async (req: any, res: any): Promise<void> => {
     try {
-      const userAddress = req.user;
       const { limit, page } = req.query;
       const contracts = await userContractService.getDeployedContracts({
         limit,

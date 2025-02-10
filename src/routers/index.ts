@@ -44,7 +44,7 @@ routers.post(
 
 routers.get(
   "/contract/deployed",
-  verifySignatureMiddleware,
+
   contractController.getDeployedContracts
 );
 
