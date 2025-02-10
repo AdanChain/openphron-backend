@@ -20,7 +20,7 @@ const contractController = {
             const response = await userContractService.addMessage({ _id, stepId, content, userAddress });
             res.json(response);
         } catch (error: any) {
-            console.log("send-message-error: ", error.message); 
+            console.log("send-message-error: ", error.message);
             res.json(error.message);
         }
     },
@@ -33,9 +33,20 @@ const contractController = {
             console.log("get-contract-error: ", error.message);
         }
     },
+    shareContract: async (req: any, res: any): Promise<void> => {
+        try {
+            const { id } = req.body;
+            const sharedContract = await userContractService.shareContract({ id });
+            res.json(sharedContract);
+        } catch (error: any) {
+            res.json(error.message);
+            console.log("share-contract-error: ", error.message);
+        }
+    },
     saveResult: async (req: any, res: any): Promise<void> => {
         try {
             const { _id, stepId } = req.body;
+
             const result = await userContractService.saveResult({ _id, stepId });
             res.json(result);
         } catch (error: any) {

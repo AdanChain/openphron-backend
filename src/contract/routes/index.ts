@@ -6,6 +6,7 @@ const routers = express();
 routers.get("/contract/:userAddress", contractController.getContracts);
 routers.post("/contract", contractController.sendInitMessage);
 routers.post("/contract/message", contractController.sendMessage);
+routers.post("/contract/share", contractController.shareContract);
 
 routers.post("/contract/save-result", contractController.saveResult);
 

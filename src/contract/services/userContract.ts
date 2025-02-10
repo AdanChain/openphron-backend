@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { costDA, userContractsDA } from "../data-access";
 import assistorService from "./assistor";
 import workflowService from "./workflow";
+import SharedContract from '../models/sharedContract';
 
 const userContractService = {
     create: async (data: CreateContractData) => {
@@ -11,7 +12,7 @@ const userContractService = {
         const workflow = await workflowService.getById(1);
         const assistors = workflow.assistors;
         const steps = assistors.map(() => ({ history: [] }));
-        
+
         const uniqueId = uuidv4();
         let userContract: any = {
             id: uniqueId,
@@ -59,7 +60,6 @@ const userContractService = {
         await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
         return { responseMessage };
     },
-
     getContractsByUser: async (userAddress: string) => {
         const contracts = await userContractsDA.finds({ userAddress });
         return contracts;
@@ -74,6 +74,23 @@ const userContractService = {
         });
         await userContractsDA.saveResult({ _id, stepId, content: response });
         return response;
+    },
+    shareContract: async (filter: any) => {
+        const { id } = filter;
+        const userContract = await userContractsDA.findOne({ id });
+        const accessToken = uuidv4();
+        const sharedAt = new Date();
+        const expiresAt = new Date(sharedAt.getTime() + 1000 * 60 * 60 * 24 * 30); // 30 days
+
+        await SharedContract.create({
+            user_id: userContract.userAddress,
+            content: userContract.steps,
+            shared_at: sharedAt,
+            expires_at: expiresAt,
+            access_token: accessToken,
+        });
+
+        return accessToken;
     },
     deleteContractById: async (filter: any) => {
         const { _id } = filter;
