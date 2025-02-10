@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const MessageSchema = new Schema({
+export const MessageSchema = new Schema({
     role: String,
     content: String
 })

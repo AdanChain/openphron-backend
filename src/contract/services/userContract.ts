@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { costDA, userContractsDA } from "../data-access";
+import { userContractsDA } from "../data-access";
 import assistorService from "./assistor";
 import workflowService from "./workflow";
 import SharedContract from '../models/sharedContract';
@@ -76,21 +76,32 @@ const userContractService = {
         return response;
     },
     shareContract: async (filter: any) => {
-        const { id } = filter;
-        const userContract = await userContractsDA.findOne({ id });
+        const userContract = await userContractsDA.findOne(filter);
         const accessToken = uuidv4();
         const sharedAt = new Date();
         const expiresAt = new Date(sharedAt.getTime() + 1000 * 60 * 60 * 24 * 30); // 30 days
-
+        // console.log("userContract: ", userContract.steps);
         await SharedContract.create({
-            user_id: userContract.userAddress,
-            content: userContract.steps,
+            user_address: userContract.userAddress,
+            access_token: accessToken,
+            steps: userContract.steps,
+            visibility: "public",
             shared_at: sharedAt,
             expires_at: expiresAt,
-            access_token: accessToken,
         });
 
         return accessToken;
+    },
+    getSharedContract: async (filter: any) => {
+        const { accessToken } = filter;
+        const sharedContract = await SharedContract.findOne({ access_token: accessToken });
+        if (!sharedContract) {
+            return { error: "Shared contract not found" };
+        }
+        if (sharedContract.expires_at && sharedContract.expires_at < new Date()) {
+            return { error: "Shared contract expired" };
+        }
+        return sharedContract;
     },
     deleteContractById: async (filter: any) => {
         const { _id } = filter;

@@ -35,12 +35,24 @@ const contractController = {
     },
     shareContract: async (req: any, res: any): Promise<void> => {
         try {
-            const { id } = req.body;
-            const sharedContract = await userContractService.shareContract({ id });
-            res.json(sharedContract);
+            const { id } = req.params;
+            console.log("id: ", id);
+            const result = await userContractService.shareContract({ _id: id });
+            console.log("result: ", result);
+            res.json(result);
         } catch (error: any) {
             res.json(error.message);
             console.log("share-contract-error: ", error.message);
+        }
+    },
+    getSharedContract: async (req: any, res: any): Promise<void> => {
+        try {
+            const { accessToken } = req.params;
+            const result = await userContractService.getSharedContract({ accessToken });
+            res.json(result);
+        } catch (error: any) {
+            res.json(error.message);
+            console.log("get-shared-contract-error: ", error.message);
         }
     },
     saveResult: async (req: any, res: any): Promise<void> => {

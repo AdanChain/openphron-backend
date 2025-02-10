@@ -12,6 +12,8 @@ routers.get("/contract", verifySignatureMiddleware, contractController.getContra
 routers.post("/contract", verifySignatureMiddleware, contractController.sendInitMessage);
 routers.post("/contract/message", verifySignatureMiddleware, contractController.sendMessage);
 routers.delete("/contract/:_id", verifySignatureMiddleware, contractController.deleteContract)
+routers.post("/contract/share/:id", contractController.shareContract);
+routers.get("/contract/shared/:accessToken", contractController.getSharedContract);
 
 routers.post("/contract/save-result", verifySignatureMiddleware, contractController.saveResult);
 
