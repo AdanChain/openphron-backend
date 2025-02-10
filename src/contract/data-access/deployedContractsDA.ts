@@ -5,17 +5,10 @@ class DeployedContractsDA extends BaseDataAccess {
     super(dbModel);
   }
 
-  async addContract(data: {
-    contractAddress: string;
-    userAddress: string;
-  }): Promise<any> {
-    const { contractAddress, userAddress } = data;
-    const userContract = await this.create({
-      userAddress,
-      contractAddress,
-    });
+  async countContracts(): Promise<any> {
+    const totalContracts = await this.countDocuments();
 
-    return;
+    return totalContracts;
   }
 }
 

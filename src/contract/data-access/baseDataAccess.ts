@@ -35,6 +35,10 @@ class BaseDataAccess {
     const result = await this.model.deleteOne(filter);
     return result;
   }
+  async countDocuments(filter?: any) {
+    const result = await this.model.countDocuments(filter);
+    return result;
+  }
 }
 
 export default BaseDataAccess;

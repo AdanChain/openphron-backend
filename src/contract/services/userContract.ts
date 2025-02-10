@@ -88,11 +88,30 @@ const userContractService = {
     return userContract;
   },
   getDeployedContracts: async (optionalFilters?: any) => {
-    const deployedContracts = await userContractsDA.finds(
-      null,
-      optionalFilters
-    );
-    return deployedContracts;
+    const {} = optionalFilters;
+
+    const { limit, page } = optionalFilters;
+
+    const _page = parseInt(page, 10) || 1;
+    const _limit = parseInt(limit, 10) || 1;
+    // Calculate skip value
+    const skip = (_page - 1) * _limit;
+    const deployedContracts = await deployedContractsDA.finds(null, {
+      skip,
+      limit: _limit,
+    });
+    const totalContracts = await deployedContractsDA.countContracts();
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalContracts / _limit);
+
+    return {
+      data: deployedContracts || [],
+      totalData: totalContracts,
+      totalContracts,
+      totalPages,
+      currentPage: _page,
+    };
   },
 };
 
