@@ -12,12 +12,19 @@ const AssistorSchema = new Schema({
     action: Boolean
 })
 
+const ParametersSchema = new Schema({
+    contractNode: Number,
+    testNode: Number
+})
+
 const WorkflowSchema = new Schema({
     id: String,
     name: String,
     descrition: String,
-    assistors: [AssistorSchema]
+    assistors: [AssistorSchema],
+    parameters: ParametersSchema
 })
+
 
 
 const Workflows = mongoose.model("workflows", WorkflowSchema);

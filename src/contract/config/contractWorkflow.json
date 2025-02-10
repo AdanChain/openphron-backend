@@ -31,8 +31,7 @@
       "result_instruction": "Final code has been approved, Extract the finalized code. I need only test script",
       "isAuto": true,
       "action": false
-    }
-    ,
+    },
     {
       "name": "action",
       "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract, covering all relevant functionalities and edge cases. The tests should be written using Hardhat's testing framework and should aim to: Verify correct functionality, Identify potential vulnerabilities, Assess gas efficiency, Ensure robustness. The test suite should be well-structured, easy to understand, and maintainable. Use clear and concise naming conventions for test cases and assertions. Give only test case code without other explainations",
@@ -40,5 +39,9 @@
       "isAuto": true,
       "action": true
     }
-  ]
+  ],
+  "parameters": {
+    "contractNode": 2,
+    "testNode": 3
+  }
 }
