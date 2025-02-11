@@ -74,6 +74,15 @@ const contractController = {
         } catch (error: any) {
             console.log("delete-contract-error", error.message);
         }
+    },
+    renameContract: async (req: any, res: any) => {
+        try {
+            const { name, contract_Id } = req.body;
+            await userContractService.renameContractById({name, _id: contract_Id});
+            res.json({res: "success"});
+        } catch (error: any) {
+            console.log("rename-contract-error: ", error.message)
+        }
     }
 }
 

@@ -106,6 +106,11 @@ const userContractService = {
     deleteContractById: async (filter: any) => {
         const { _id } = filter;
         await userContractsDA.delete({ _id });
+    },
+    renameContractById: async (filter: any) => {
+        const { name, _id } = filter;
+        await userContractsDA.update({ _id }, { name });
+        return;
     }
 }
 
