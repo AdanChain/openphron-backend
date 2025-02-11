@@ -11,6 +11,7 @@ const StepSchema = new Schema({
 })
 
 const SharedContractSchema = new mongoose.Schema({
+    id: String,
     user_address: String,
     steps: [StepSchema],
     shared_at: Date,
@@ -19,6 +20,6 @@ const SharedContractSchema = new mongoose.Schema({
     access_token: String
 });
 
-const SharedContract = mongoose.model('SharedContract', SharedContractSchema);
+const SharedContracts = mongoose.model('SharedContract', SharedContractSchema);
 
-export default SharedContract;
+export default SharedContracts;
