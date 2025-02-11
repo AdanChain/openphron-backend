@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { costDA, userContractsDA } from "../data-access";
+import { userContractsDA } from "../data-access";
 import assistorService from "./assistor";
 import workflowService from "./workflow";
+import SharedContract from '../models/sharedContract';
 
 const userContractService = {
     create: async (data: CreateContractData) => {
@@ -11,7 +12,7 @@ const userContractService = {
         const workflow = await workflowService.getById(1);
         const assistors = workflow.assistors;
         const steps = assistors.map(() => ({ history: [] }));
-        
+
         const uniqueId = uuidv4();
         let userContract: any = {
             id: uniqueId,
@@ -59,7 +60,6 @@ const userContractService = {
         await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
         return { responseMessage };
     },
-
     getContractsByUser: async (userAddress: string) => {
         const contracts = await userContractsDA.finds({ userAddress });
         return contracts;
@@ -75,9 +75,42 @@ const userContractService = {
         await userContractsDA.saveResult({ _id, stepId, content: response });
         return response;
     },
+    shareContract: async (filter: any) => {
+        const userContract = await userContractsDA.findOne(filter);
+        const accessToken = uuidv4();
+        const sharedAt = new Date();
+        const expiresAt = new Date(sharedAt.getTime() + 1000 * 60 * 60 * 24 * 30); // 30 days
+        // console.log("userContract: ", userContract.steps);
+        await SharedContract.create({
+            user_address: userContract.userAddress,
+            access_token: accessToken,
+            steps: userContract.steps,
+            visibility: "public",
+            shared_at: sharedAt,
+            expires_at: expiresAt,
+        });
+
+        return accessToken;
+    },
+    getSharedContract: async (filter: any) => {
+        const { accessToken } = filter;
+        const sharedContract = await SharedContract.findOne({ access_token: accessToken });
+        if (!sharedContract) {
+            return { error: "Shared contract not found" };
+        }
+        if (sharedContract.expires_at && sharedContract.expires_at < new Date()) {
+            return { error: "Shared contract expired" };
+        }
+        return sharedContract;
+    },
     deleteContractById: async (filter: any) => {
         const { _id } = filter;
         await userContractsDA.delete({ _id });
+    },
+    renameContractById: async (filter: any) => {
+        const { name, _id } = filter;
+        await userContractsDA.update({ _id }, { name });
+        return;
     }
 }
 
