@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { userContractsDA } from "../data-access";
 import assistorService from "./assistor";
 import workflowService from "./workflow";
-import SharedContract from '../models/sharedContract';
+import { shareContractsDA } from '../data-access'
 
 const userContractService = {
     create: async (data: CreateContractData) => {
@@ -81,7 +81,8 @@ const userContractService = {
         const sharedAt = new Date();
         const expiresAt = new Date(sharedAt.getTime() + 1000 * 60 * 60 * 24 * 30); // 30 days
         // console.log("userContract: ", userContract.steps);
-        await SharedContract.create({
+        await shareContractsDA.create({
+            id: filter._id,
             user_address: userContract.userAddress,
             access_token: accessToken,
             steps: userContract.steps,
@@ -94,7 +95,7 @@ const userContractService = {
     },
     getSharedContract: async (filter: any) => {
         const { accessToken } = filter;
-        const sharedContract = await SharedContract.findOne({ access_token: accessToken });
+        const sharedContract = await shareContractsDA.findOne({ access_token: accessToken });
         if (!sharedContract) {
             return { error: "Shared contract not found" };
         }

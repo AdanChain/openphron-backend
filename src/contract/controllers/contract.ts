@@ -36,9 +36,7 @@ const contractController = {
     shareContract: async (req: any, res: any): Promise<void> => {
         try {
             const { id } = req.params;
-            console.log("id: ", id);
             const result = await userContractService.shareContract({ _id: id });
-            console.log("result: ", result);
             res.json(result);
         } catch (error: any) {
             res.json(error.message);

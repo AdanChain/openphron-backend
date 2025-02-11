@@ -1,7 +1,5 @@
 import { costService } from "../services";
-import { tokenize } from "../utils";
 import BaseDataAccess from "./baseDataAccess";
-import { Document, Model } from "mongoose";
 
 class UserContractDA extends BaseDataAccess {
     constructor(dbModel: any) {
