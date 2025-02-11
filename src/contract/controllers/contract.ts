@@ -65,11 +65,13 @@ const contractController = {
   addDeployedContracts: async (req: any, res: any): Promise<void> => {
     try {
       const userAddress = req.user;
-      const { contractAddress, networkId } = req.body;
+      const { contractAddress, chainId, abi, contractId } = req.body;
       const userContract = await userContractService.addDeployedContract({
         userAddress,
-        contractAddress,
-        networkId,
+        address: contractAddress,
+        chainId,
+        abi: JSON.stringify(abi),
+        contractId,
       });
       res.json(userContract);
     } catch (error: any) {
@@ -87,6 +89,29 @@ const contractController = {
       res.json(contracts);
     } catch (error: any) {
       console.log("get-contract-error: ", error.message);
+    }
+  },
+  getUserDeployedContracts: async (req: any, res: any): Promise<void> => {
+    try {
+      const { id } = req.params;
+
+      console.log("getUser deployed contracts", id);
+
+      const userDeployedContract =
+        await userContractService.getUserDeployedContract(id);
+
+      console.log("userDeployedContract", JSON.parse(userDeployedContract.abi));
+      res.json([
+        {
+          userAddress: userDeployedContract.userAddress,
+          address: userDeployedContract.address,
+          chainId: userDeployedContract.chainId,
+          abi: JSON.parse(userDeployedContract.abi),
+          contractId: userDeployedContract.contractId,
+        },
+      ]);
+    } catch (error: any) {
+      console.log("getUserDeployedContracts: ", error.message);
     }
   },
 };

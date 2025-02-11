@@ -42,10 +42,12 @@ routers.post(
   contractController.saveResult
 );
 
-routers.get(
-  "/contract/deployed",
+routers.get("/contract/deployed", contractController.getDeployedContracts);
 
-  contractController.getDeployedContracts
+routers.get(
+  "/contract/user/deployed/:id",
+  verifySignatureMiddleware,
+  contractController.getUserDeployedContracts
 );
 
 routers.get(

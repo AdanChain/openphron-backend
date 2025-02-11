@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { costDA, userContractsDA, deployedContractsDA } from "../data-access";
+import DeployedContracts from "../models/deployedContracts";
 import assistorService from "./assistor";
 import workflowService from "./workflow";
 
@@ -83,13 +84,13 @@ const userContractService = {
     await userContractsDA.delete({ _id });
   },
   addDeployedContract: async (data: any) => {
-    const userContract = await deployedContractsDA.create(data);
+    console.log(data);
+    const userContract = await DeployedContracts.create({ ...data });
+    //deployedContractsDA.create(data);
 
     return userContract;
   },
   getDeployedContracts: async (optionalFilters?: any) => {
-    const {} = optionalFilters;
-
     const { limit, page } = optionalFilters;
 
     const _page = parseInt(page, 10) || 1;
@@ -112,6 +113,13 @@ const userContractService = {
       totalPages,
       currentPage: _page,
     };
+  },
+  getUserDeployedContract: async (id: any) => {
+    const userDeployedContracts = await deployedContractsDA.findOne({
+      contractId: id,
+    });
+
+    return userDeployedContracts;
   },
 };
 

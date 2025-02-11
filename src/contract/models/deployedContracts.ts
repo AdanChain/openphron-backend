@@ -3,9 +3,11 @@ import mongoose, { Schema } from "mongoose";
 const DeployedContractsSchema = new Schema(
   {
     userAddress: String,
-    contractAddress: String,
-    networkId: String,
+    address: String,
+    chainId: String,
+    abi: String,
     // userId: String,
+    contractId: String,
   },
   {
     timestamps: true,
