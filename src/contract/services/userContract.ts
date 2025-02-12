@@ -115,7 +115,7 @@ const userContractService = {
     };
   },
   getUserDeployedContract: async (id: any) => {
-    const userDeployedContracts = await deployedContractsDA.findOne({
+    const userDeployedContracts = await DeployedContracts.find({
       contractId: id,
     });
 
