@@ -101,6 +101,16 @@ const contractController = {
         await userContractService.getUserDeployedContract(id);
 
       console.log("userDeployedContract", userDeployedContract);
+      const contractsData = userDeployedContract.map((d) => [
+        {
+          userAddress: d.userAddress,
+          address: d.address,
+          chainId: d.chainId,
+          //@ts-ignore
+          abi: JSON.parse(d?.abi),
+          contractId: d.contractId,
+        },
+      ]);
 
       // [
       //   {
@@ -111,7 +121,7 @@ const contractController = {
       //     contractId: userDeployedContract.contractId,
       //   },
       // ]
-      res.json(userDeployedContract);
+      res.json(contractsData);
     } catch (error: any) {
       console.log("getUserDeployedContracts: ", error.message);
     }
