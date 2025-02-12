@@ -101,16 +101,16 @@ const contractController = {
         await userContractService.getUserDeployedContract(id);
 
       console.log("userDeployedContract", userDeployedContract);
-      const contractsData = userDeployedContract.map((d) => [
-        {
+      const contractsData = userDeployedContract.map((d) => {
+        return {
           userAddress: d.userAddress,
           address: d.address,
           chainId: d.chainId,
           //@ts-ignore
           abi: JSON.parse(d?.abi),
           contractId: d.contractId,
-        },
-      ]);
+        };
+      });
 
       // [
       //   {
