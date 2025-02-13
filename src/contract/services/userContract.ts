@@ -43,21 +43,6 @@ const userContractService = {
   addMessage: async (data: AddMessageData) => {
     const { _id, stepId, content, userAddress } = data;
 
-<<<<<<< HEAD
-        const response = await assistorService.generateText({
-            workflowId: userContract.workflowId,
-            stepId,
-            history: userContract.steps[stepId].history
-        });
-
-        const responseMessage = {
-            role: "assistant",
-            content: response
-        }
-        await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
-        return { responseMessage };
-    },
-=======
     const message = {
       role: "user",
       content,
@@ -78,7 +63,6 @@ const userContractService = {
     await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
     return { responseMessage };
   },
->>>>>>> 9febb0019de30ef398fc5e088a014c4f0d0a6612
 
   getContractsByUser: async (userAddress: string) => {
     const contracts = await userContractsDA.finds({ userAddress });
