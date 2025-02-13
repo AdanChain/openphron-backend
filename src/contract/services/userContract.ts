@@ -97,12 +97,15 @@ const userContractService = {
     const _limit = parseInt(limit, 10) || 1;
     // Calculate skip value
     const skip = (_page - 1) * _limit;
-    const deployedContracts = await deployedContractsDA.finds(null, {
-      skip,
-      limit: _limit,
-    });
+    const deployedContracts = await deployedContractsDA.finds(
+      { address: { $ne: "", $exists: true } },
+      {
+        skip,
+        limit: _limit,
+      }
+    );
     const totalContracts = await DeployedContracts.countDocuments({
-      address: { $ne: "" },
+      address: { $ne: "", $exists: true },
     });
 
     // Calculate total pages
