@@ -101,7 +101,9 @@ const userContractService = {
       skip,
       limit: _limit,
     });
-    const totalContracts = await deployedContractsDA.countContracts();
+    const totalContracts = await DeployedContracts.countDocuments({
+      address: { $ne: "", $exists: true },
+    });
 
     // Calculate total pages
     const totalPages = Math.ceil(totalContracts / _limit);
