@@ -102,7 +102,7 @@ const userContractService = {
       limit: _limit,
     });
     const totalContracts = await DeployedContracts.countDocuments({
-      address: { $ne: "", $exists: true },
+      address: { $ne: "" },
     });
 
     // Calculate total pages
