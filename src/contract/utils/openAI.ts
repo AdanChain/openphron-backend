@@ -26,7 +26,7 @@ class OPENAI {
             : contents;
         
         const data = {
-            model: "gpt-3.5-turbo",
+            model: "gpt-4o-mini",
             messages: messages
         };
         return this._generateFromOpenAI(data);

@@ -18,6 +18,7 @@ const oracleService = {
     },
     gets: async () => {
         const oracleData = await oracleDA.find({})
+        console.log('service oracle Data ', oracleData)
         return oracleData;
     }
 }

@@ -20,7 +20,7 @@ const contractController = {
             const response = await userContractService.addMessage({ _id, stepId, content, userAddress });
             res.json(response);
         } catch (error: any) {
-            console.log("send-message-error: ", error.message); 
+            console.log("send-message-error: ", error.message);
             res.json(error.message);
         }
     },
@@ -33,9 +33,30 @@ const contractController = {
             console.log("get-contract-error: ", error.message);
         }
     },
+    shareContract: async (req: any, res: any): Promise<void> => {
+        try {
+            const { id } = req.params;
+            const result = await userContractService.shareContract({ _id: id });
+            res.json(result);
+        } catch (error: any) {
+            res.json(error.message);
+            console.log("share-contract-error: ", error.message);
+        }
+    },
+    getSharedContract: async (req: any, res: any): Promise<void> => {
+        try {
+            const { accessToken } = req.params;
+            const result = await userContractService.getSharedContract({ accessToken });
+            res.json(result);
+        } catch (error: any) {
+            res.json(error.message);
+            console.log("get-shared-contract-error: ", error.message);
+        }
+    },
     saveResult: async (req: any, res: any): Promise<void> => {
         try {
             const { _id, stepId } = req.body;
+
             const result = await userContractService.saveResult({ _id, stepId });
             res.json(result);
         } catch (error: any) {
@@ -61,6 +82,15 @@ const contractController = {
             console.log("save-error-error", error.message);
             res.json(error.message);
         }       
+    },
+    renameContract: async (req: any, res: any) => {
+        try {
+            const { name, contract_Id } = req.body;
+            await userContractService.renameContractById({name, _id: contract_Id});
+            res.json({res: "success"});
+        } catch (error: any) {
+            console.log("rename-contract-error: ", error.message)
+        }
     }
 }
 
