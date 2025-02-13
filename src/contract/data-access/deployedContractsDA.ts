@@ -5,8 +5,8 @@ class DeployedContractsDA extends BaseDataAccess {
     super(dbModel);
   }
 
-  async countContracts(): Promise<any> {
-    const totalContracts = await this.countDocuments();
+  async countContracts(filter: any): Promise<any> {
+    const totalContracts = await this.countDocuments(filter ? filter : {});
 
     return totalContracts;
   }
