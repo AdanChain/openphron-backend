@@ -4,6 +4,7 @@ import { contractController, workflowContoller } from "../contract/controllers";
 import { verifySignatureMiddleware } from "../middleware";
 import costController from "../contract/controllers/cost";
 import adminRoutes from '../admin/routes';
+import adminController from "../admin/controllers/adminController";
 const routers = express.Router();
 
 
@@ -22,6 +23,8 @@ routers.post("/token/reduce", verifySignatureMiddleware, costController.reduceTo
 routers.get("/token", verifySignatureMiddleware, costController.getTokens);
 routers.post("/token/subscribe", verifySignatureMiddleware, costController.subscribeTokens)
 
+routers.post("/contract/save-error", verifySignatureMiddleware, contractController.saveError);
+///////////////admin routes///////////////
 
 
 

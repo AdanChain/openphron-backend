@@ -40,6 +40,20 @@ class UserContractDA extends BaseDataAccess {
         }
         throw new Error("User contract or step not found");
     }
-}
+    async saveError(data: { contractId: string; error: any }): Promise<string> {
+        const { contractId, error } = data;
+        const userContract = await this.findOne({ _id: contractId });
+        if (userContract) {
+            if(error.form === "compile"){
+                userContract.compileError.push({content:error.message,time:new Date()});
+            }else{
+                userContract.testError.push({content:error.message,time:new Date()} );
+            }
+            await this.update({ _id: contractId }, userContract);
+            return "success";
+        }
+        throw new Error("User contract not found");
+    }
+}   
 
 export default UserContractDA;

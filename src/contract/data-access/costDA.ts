@@ -21,6 +21,27 @@ class CostDA extends BaseDataAccess {
         const result = await newData.save();
         return result
     }
+
+    async addUser(user: any) {
+        const isExist = await this.findOne({ userAddress: user.address });
+        if (isExist) {
+            return "isExist";
+        }
+        const data = {
+            userAddress: user.address,
+            remainingTokens:user.tokens, 
+            remainingDays:user.days,
+            lastResetTime:new Date()
+        }
+        const newData = new this.model(data);
+        const result = await newData.save();
+        return "success";
+    }
+
+    async deleteUser(address: string) {
+        const result = await this.model.deleteOne({ userAddress: address });
+        return result;
+    }
 }
 
 export default CostDA

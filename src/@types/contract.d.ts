@@ -67,4 +67,11 @@ interface IUserContract {
     name: string;
     workflowId: string | number;
     steps: IStep[];
+    compileError: IError[];
+    testError: IError[];
+}   
+
+interface IError {
+    content: string;
+    time: Date;
 }

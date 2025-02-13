@@ -51,6 +51,16 @@ const contractController = {
         } catch (error: any) {
             console.log("delete-contract-error", error.message);
         }
+    },
+    saveError: async (req: any, res: any): Promise<void> => {
+        try {
+            const { contractId, error } = req.body;
+            await userContractService.saveError({ contractId, error });
+            res.json({ res: "success" });
+        } catch (error: any) {
+            console.log("save-error-error", error.message);
+            res.json(error.message);
+        }       
     }
 }
 
