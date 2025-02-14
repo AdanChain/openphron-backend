@@ -5,12 +5,6 @@ class BaseDataAccess {
         this.model = model;
     }
     async create(data: any) {
-        const { id } = data
-        const isExist = await this.findOne({ id: id });
-        if (isExist) {
-            await this.model.updateOne({ id: id }, data);
-            return isExist;
-        }
         const newData = new this.model(data);
         const result = await newData.save();
         return result;

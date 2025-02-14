@@ -1,3 +1,4 @@
+import { create } from 'domain';
 import mongoose, { Schema } from 'mongoose';
 
 const MessageSchema = new Schema({
@@ -12,11 +13,15 @@ const StepSchema = new Schema({
 
 const SharedContractSchema = new mongoose.Schema({
     id: String,
-    user_address: String,
+    userAddress: String,
+    name: String,
     steps: [StepSchema],
-    shared_at: Date,
+    workflowId: String,
     visibility: String,
-    expires_at: Date,
+    sharedAt: Date,
+    expiresAt: Date,
+    createdAt: Date,
+    updatedAt: Date,
     access_token: String
 });
 
