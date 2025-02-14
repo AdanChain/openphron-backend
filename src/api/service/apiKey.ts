@@ -2,15 +2,15 @@ import { apiKeyDA } from "../data-access";
 import { generateApiKey } from "../utils";
 
 const apiKeyService = {
-    createApiKey: async (userId: string | undefined, hint?: string) => {
+    createApiKey: async (userId: string | undefined, name?: string) => {
         if (!userId) return false;
-        const apiKey = generateApiKey(hint);
+        const apiKey = generateApiKey(name);
 
         if (await apiKeyDA.apiKeyExists(apiKey)) {
-            await apiKeyService.createApiKey(userId, hint);
+            await apiKeyService.createApiKey(userId, name);
         }
-        await apiKeyDA.create({ userId, name: hint, apiKey });
-        return apiKey;
+        const userApiKey = await apiKeyDA.create({ userId, name, apiKey });
+        return userApiKey;
     },
     deleteApiKey: async (apiKey: string | undefined) => {
         const apiKeyExists = await apiKeyDA.apiKeyExists(apiKey);
