@@ -27,6 +27,8 @@ routers.post("/token/reduce", verifySignatureMiddleware, costController.reduceTo
 routers.get("/token", verifySignatureMiddleware, costController.getTokens);
 routers.post("/token/subscribe", verifySignatureMiddleware, costController.subscribeTokens)
 
+routers.post("/contract/save-error", verifySignatureMiddleware, contractController.saveError);
+///////////////admin routes///////////////
 
 
 
