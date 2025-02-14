@@ -29,7 +29,7 @@ class GEMINI {
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${this.apiKey}`;
         let response;
         const proxyAgent = this.getAgent();
-        
+
         if (process.env.PROXY_ENABLE) {
             response = await axios.post(apiUrl, data, {
                 httpsAgent: proxyAgent,

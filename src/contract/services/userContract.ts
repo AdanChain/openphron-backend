@@ -83,17 +83,22 @@ const userContractService = {
         const accessToken = uuidv4();
         const sharedAt = new Date();
         const expiresAt = new Date(sharedAt.getTime() + 1000 * 60 * 60 * 24 * 30); // 30 days
-        // console.log("userContract: ", userContract.steps);
-        await shareContractsDA.create({
-            id: filter._id,
-            user_address: userContract.userAddress,
-            access_token: accessToken,
-            steps: userContract.steps,
-            visibility: "public",
-            shared_at: sharedAt,
-            expires_at: expiresAt,
-        });
 
+        const sharedContract = {
+            id: userContract._id,
+            userAddress: userContract.userAddress,
+            workflowId: userContract.workflowId,
+            name: userContract.name,
+            steps: userContract.steps,
+            createdAt: userContract.createdAt,
+            updatedAt: userContract.updatedAt,
+            access_token: accessToken,
+            sharedAt: sharedAt,
+            expiresAt: expiresAt,
+            visibility: "public"
+        }
+
+        await shareContractsDA.create(sharedContract);
         return accessToken;
     },
     getSharedContract: async (filter: any) => {
@@ -102,7 +107,7 @@ const userContractService = {
         if (!sharedContract) {
             return { error: "Shared contract not found" };
         }
-        if (sharedContract.expires_at && sharedContract.expires_at < new Date()) {
+        if (sharedContract.expiresAt && sharedContract.expiresAt < new Date()) {
             return { error: "Shared contract expired" };
         }
         return sharedContract;
@@ -135,6 +140,22 @@ const userContractService = {
         const { name, _id } = filter;
         await userContractsDA.update({ _id }, { name });
         return;
+    },
+    addSharedContract: async (filter: any) => {
+        const { _id, address } = filter;
+        const sharedContract = await shareContractsDA.findOne({ _id });
+
+        const _contract = {
+            id: sharedContract.id,
+            userAddress: address,
+            workflowId: sharedContract.workflowId,
+            name: sharedContract.name,
+            steps: sharedContract.steps,
+            createdAt: sharedContract.createdAt,
+            updatedAt: sharedContract.updatedAt
+        }
+
+        await userContractsDA.create( _contract );
     }
 }
 

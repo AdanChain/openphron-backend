@@ -86,10 +86,19 @@ const contractController = {
     renameContract: async (req: any, res: any) => {
         try {
             const { name, contract_Id } = req.body;
-            await userContractService.renameContractById({name, _id: contract_Id});
-            res.json({res: "success"});
+            await userContractService.renameContractById({ name, _id: contract_Id });
+            res.json({ res: "success" });
         } catch (error: any) {
             console.log("rename-contract-error: ", error.message)
+        }
+    },
+    addSharedContract: async (req: any, res: any) => {
+        try {
+            const { _id, address } = req.body;
+            await userContractService.addSharedContract({ _id, address });
+            res.json({ res: "success" });
+        } catch (error: any) {
+            console.log("add-shared-contract-error: ", error.message)
         }
     }
 }

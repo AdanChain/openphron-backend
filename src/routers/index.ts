@@ -4,7 +4,8 @@ import { contractController, workflowContoller } from "../contract/controllers";
 import { verifySignatureMiddleware } from "../middleware";
 import costController from "../contract/controllers/cost";
 import adminRoutes from '../admin/routes';
-import adminController from "../admin/controllers/adminController";
+import apiRouter from "../api/routes";
+import { apiKeyController } from "../api/controller";
 const routers = express.Router();
 
 
@@ -15,7 +16,8 @@ routers.post("/contract/message", verifySignatureMiddleware, contractController.
 routers.delete("/contract/:_id", verifySignatureMiddleware, contractController.deleteContract)
 routers.post("/contract/share/:id", contractController.shareContract);
 routers.get("/contract/shared/:accessToken", contractController.getSharedContract);
-routers.post("/contract/rename", contractController.renameContract)
+routers.post("/contract/rename", contractController.renameContract);
+routers.post("/contract/shared", contractController.addSharedContract);
 
 routers.post("/contract/save-result", verifySignatureMiddleware, contractController.saveResult);
 
@@ -40,11 +42,17 @@ routers.get("/oracle/:id", verifySignatureMiddleware, oracleController.getById)
 routers.get("/question", verifySignatureMiddleware, questionController.gets)
 routers.get("/question/:id", verifySignatureMiddleware, questionController.getById)
 routers.get("/question/oracle/:oracleId", verifySignatureMiddleware, questionController.questionsForOracle)
+routers.post("/question", verifySignatureMiddleware, questionController.update)
 
 routers.get("/subscription/user", verifySignatureMiddleware, subscriptionController.getByUser)
 routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscriptionController.getsByOracle)
 
 // Add admin routes
 routers.use('/admin', adminRoutes);
+
+///////////API Routers///////////////
+routers.post('/key', verifySignatureMiddleware, apiKeyController.createApiKey);
+routers.get('/key', verifySignatureMiddleware, apiKeyController.getApiKeys);
+routers.delete('/key/:apiKey', verifySignatureMiddleware, apiKeyController.deleteApiKey);
 
 export default routers;
