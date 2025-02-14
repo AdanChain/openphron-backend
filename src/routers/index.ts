@@ -50,8 +50,8 @@ routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscri
 routers.use('/admin', adminRoutes);
 
 ///////////API Routers///////////////
-apiRouter.post('/key', verifySignatureMiddleware, apiKeyController.createApiKey);
-apiRouter.get('/key', verifySignatureMiddleware, apiKeyController.getApiKeys);
-apiRouter.delete('/key/:apiKey', verifySignatureMiddleware, apiKeyController.deleteApiKey);
+routers.post('/key', verifySignatureMiddleware, apiKeyController.createApiKey);
+routers.get('/key', verifySignatureMiddleware, apiKeyController.getApiKeys);
+routers.delete('/key/:apiKey', verifySignatureMiddleware, apiKeyController.deleteApiKey);
 
 export default routers;

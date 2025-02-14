@@ -24,7 +24,7 @@ const main = async () => {
         await workflowController.initConfig();
 
         app.use("/api", routers);
-        app.post(`/${OPENPHRON_UPDATEDATA_URL}`, apiRouter)
+        // app.post(`/${OPENPHRON_UPDATEDATA_URL}`, apiRouter)
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}.`);
