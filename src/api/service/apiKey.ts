@@ -1,5 +1,5 @@
 import { apiKeyDA } from "../data-access";
-import { generateApiKey } from "../utils";
+import { formatDate, generateApiKey } from "../utils";
 
 const apiKeyService = {
     createApiKey: async (userId: string | undefined, name?: string) => {
@@ -9,7 +9,9 @@ const apiKeyService = {
         if (await apiKeyDA.apiKeyExists(apiKey)) {
             await apiKeyService.createApiKey(userId, name);
         }
-        const userApiKey = await apiKeyDA.create({ userId, name, apiKey });
+
+        const createdAt = formatDate(new Date());
+        const userApiKey = await apiKeyDA.create({ userId, name, apiKey, createdAt });
         return userApiKey;
     },
     deleteApiKey: async (apiKey: string | undefined) => {
