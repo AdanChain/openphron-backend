@@ -3,6 +3,7 @@ import { userContractsDA } from "../data-access";
 import assistorService from "./assistor";
 import workflowService from "./workflow";
 import { shareContractsDA } from '../data-access'
+import { gemini } from '../utils';
 
 const userContractService = {
     create: async (data: CreateContractData) => {
@@ -113,7 +114,22 @@ const userContractService = {
     saveError: async (filter: any) => {
         const { contractId, error } = filter;
 
-        await userContractsDA.saveError({ contractId, error });
+
+        const message = {
+            role: "user",
+            content: error.message,
+            form: error.form
+        }
+        await userContractsDA.saveError({ contractId, error: message });
+        console.log("message: ", message);
+        const result = await gemini.generateText({ contents: [message], instruction:process.env.INSTRUCTION });
+        const newDate = {
+            role:"reason",
+            content:result,
+            form:error.form
+        }
+        console.log("newDate: ", newDate);
+        await userContractsDA.saveError({ contractId, error: newDate });
     },
     renameContractById: async (filter: any) => {
         const { name, _id } = filter;

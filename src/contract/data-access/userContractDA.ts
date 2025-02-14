@@ -43,9 +43,9 @@ class UserContractDA extends BaseDataAccess {
         const userContract = await this.findOne({ _id: contractId });
         if (userContract) {
             if(error.form === "compile"){
-                userContract.compileError.push({content:error.message,time:new Date()});
+                userContract.compileError.push({role:error.role,content:error.content,time:new Date()});
             }else{
-                userContract.testError.push({content:error.message,time:new Date()} );
+                userContract.testError.push({role:error.role,content:error.content,time:new Date()} );
             }
             await this.update({ _id: contractId }, userContract);
             return "success";
