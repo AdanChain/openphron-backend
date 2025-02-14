@@ -1,4 +1,3 @@
-import { apiKeyDA } from "../data-access";
 import { apiKeyService } from "../service";
 
 const apiKeyController = {
@@ -15,7 +14,6 @@ const apiKeyController = {
             res.status(500).json({ status: "error", message: error.message, });
         }
     },
-
     deleteApiKey: async (req: any, res: any) => {
         try {
             const { apiKey } = req.params;
@@ -25,7 +23,6 @@ const apiKeyController = {
             res.status(500).json({ status: "error", message: error.message, });
         }
     },
-
     getApiKeys: async (req: any, res: any) => {
         try {
             const address = req.user;
@@ -35,7 +32,6 @@ const apiKeyController = {
             res.status(500).json({ status: "error", message: error.message, });
         }
     },
-
     availableApiKey: async (req: any, res: any) => {
         try {
             const { apiKey } = req.body;
