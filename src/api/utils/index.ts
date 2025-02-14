@@ -12,6 +12,7 @@ export const generateApiKey = (hint?: string): string => {
 
     const randomValues = new Uint8Array(keyLength);
     crypto.getRandomValues(randomValues);
+    console.log(randomValues);
 
     let randomPart = '';
     for (let i = 0; i < keyLength; i++) {
@@ -67,4 +68,8 @@ export const generateWebCryptoApiKey = (hint?: string): string => {
         .replace(/[^A-Za-z0-9]/g, '');
 
     return randomString.slice(0, keyLength);
+};
+
+export const formatDate = (date: any) => {
+    return date.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 };
