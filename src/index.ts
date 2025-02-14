@@ -5,6 +5,7 @@ import dbConnect from './dbConnect';
 import routers from './routers';
 import workflowController from './contract/controllers/workflow';
 import { eventHandler } from './AImarketplace/service';
+import apiRouter from './api/routes';
 
 dotenv.config();
 const app = express();
@@ -12,6 +13,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 const PORT = process.env.PORT;
+const OPENPHRON_UPDATEDATA_URL = process.env.OPENPHRON_UPDATEDATA_URL;
 
 const main = async () => {
     try {
@@ -22,6 +24,7 @@ const main = async () => {
         await workflowController.initConfig();
 
         app.use("/api", routers);
+        app.post(`/${OPENPHRON_UPDATEDATA_URL}`, apiRouter)
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}.`);

@@ -1,5 +1,6 @@
-import { costDA } from "../../contract/data-access";
+import { costDA, userContractsDA } from "../../contract/data-access";
 import { BlockNumberModel } from "../../AImarketplace/models";
+import userContractDA from "../../contract/data-access/userContractDA";
 
 interface User {
     userAddress: string;
@@ -27,7 +28,7 @@ interface TestError {
 
 const adminService = {
     // Get system usage statistics
-    getSystemStats: async () => {
+    getUserState: async () => {
         try {
             // Get token usage stats
             const users: User[] = await costDA.finds();
@@ -40,17 +41,10 @@ const adminService = {
             }, 0);
 
             // Get latest block numbers for monitoring
-            const blockNumbers = await BlockNumberModel.find({});
-
             return {
-                userStats: {
-                    totalUsers,
-                    activeUsers,
-                    totalTokensUsed
-                },
-                blockchainStats: {
-                    blockNumbers
-                }
+                totalUsers,
+                activeUsers,
+                totalTokensUsed
             };
         } catch (error: any) {
             throw new Error(`Error getting system stats: ${error.message}`);
@@ -58,16 +52,13 @@ const adminService = {
     },
 
     // Get detailed user usage data
-    getUserUsageData: async () => {
+    getUserInfo: async () => {
         try {
             const users: User[] = await costDA.finds();
             return users.map((user: User) => ({
                 address: user.userAddress,
                 remainingTokens: user.remainingTokens,
-                remainingDays: user.remainingDays,
-                tokenUsage: process.env.TOKEN_LIMIT ? 
-                    Number(process.env.TOKEN_LIMIT) - user.remainingTokens : 
-                    100000 - user.remainingTokens
+                remainingDays: user.remainingDays
             }));
         } catch (error: any) {
             throw new Error(`Error getting user usage data: ${error.message}`);
@@ -75,111 +66,40 @@ const adminService = {
     },
 
     // Get error logs (from the last 24 hours)
-    getErrorLogs: async () => {
+    updateContracts: async () => {
         try {
-            // This is a placeholder - you'll need to implement proper error logging
-            // Consider using a logging service or database table for errors
-            return [];
+            const contracts = await userContractsDA.finds();
+            return contracts.map((contract: any) => ({
+                id: contract._id,
+                compileError: [...contract.compileError],
+                testError: [...contract.testError],
+                name: contract.name,
+                address: contract.userAddress,
+                createdAt: contract.createdAt,
+                steps: [...contract.steps]
+            }));
         } catch (error: any) {
             throw new Error(`Error getting error logs: ${error.message}`);
         }
     },
 
-    // Get compile errors
-    getCompileErrors: async (timeRange: 'day' | 'week' | 'month' = 'day') => {
+    addUser: async (user: any) => {
         try {
-            const now = new Date();
-            let startDate = new Date();
-            
-            switch(timeRange) {
-                case 'week':
-                    startDate.setDate(now.getDate() - 7);
-                    break;
-                case 'month':
-                    startDate.setMonth(now.getMonth() - 1);
-                    break;
-                default:
-                    startDate.setDate(now.getDate() - 1);
-            }
-
-            // TODO: Replace with actual DB query once error logging is implemented
-            const compileErrors: CompileError[] = [];
-            return compileErrors;
+            const result = await costDA.addUser(user);
+            return result;
         } catch (error: any) {
-            throw new Error(`Error getting compile errors: ${error.message}`);
+            throw new Error(`Error adding user: ${error.message}`);
         }
     },
-
-    // Get test errors
-    getTestErrors: async (timeRange: 'day' | 'week' | 'month' = 'day') => {
+    
+    deleteUser: async (address: string) => {
         try {
-            const now = new Date();
-            let startDate = new Date();
-            
-            switch(timeRange) {
-                case 'week':
-                    startDate.setDate(now.getDate() - 7);
-                    break;
-                case 'month':
-                    startDate.setMonth(now.getMonth() - 1);
-                    break;
-                default:
-                    startDate.setDate(now.getDate() - 1);
-            }
-
-            // TODO: Replace with actual DB query once error logging is implemented
-            const testErrors: TestError[] = [];
-            return testErrors;
+            const result = await costDA.deleteUser(address);
+            return result;
         } catch (error: any) {
-            throw new Error(`Error getting test errors: ${error.message}`);
-        }
-    },
-
-    // Get error statistics
-    getErrorStats: async () => {
-        try {
-            const dayCompileErrors = await adminService.getCompileErrors('day');
-            const dayTestErrors = await adminService.getTestErrors('day');
-            const weekCompileErrors = await adminService.getCompileErrors('week');
-            const weekTestErrors = await adminService.getTestErrors('week');
-
-            return {
-                today: {
-                    compileErrors: dayCompileErrors.length,
-                    testErrors: dayTestErrors.length,
-                    total: dayCompileErrors.length + dayTestErrors.length
-                },
-                week: {
-                    compileErrors: weekCompileErrors.length,
-                    testErrors: weekTestErrors.length,
-                    total: weekCompileErrors.length + weekTestErrors.length
-                },
-                mostCommonCompileError: getMostCommonError(dayCompileErrors),
-                mostCommonTestError: getMostCommonError(dayTestErrors)
-            };
-        } catch (error: any) {
-            throw new Error(`Error getting error statistics: ${error.message}`);
+            throw new Error(`Error deleting user: ${error.message}`);
         }
     }
 };
-
 // Helper function to get most common error
-function getMostCommonError(errors: (CompileError | TestError)[]) {
-    if (errors.length === 0) return null;
-
-    const errorCounts = errors.reduce((acc, error) => {
-        const message = error.message;
-        acc[message] = (acc[message] || 0) + 1;
-        return acc;
-    }, {} as Record<string, number>);
-
-    const mostCommon = Object.entries(errorCounts)
-        .sort(([,a], [,b]) => b - a)[0];
-
-    return {
-        message: mostCommon[0],
-        count: mostCommon[1]
-    };
-}
-
 export default adminService; 

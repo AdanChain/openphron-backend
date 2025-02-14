@@ -5,6 +5,11 @@ export const MessageSchema = new Schema({
     content: String
 })
 
+const ErrorSchema = new Schema({
+    content: String,
+    time: { type: Date, default: new Date() }
+})
+
 const StepSchema = new Schema({
     history: [MessageSchema],
     result: String
@@ -15,10 +20,11 @@ const UserContractSchema = new Schema({
     userAddress: String,
     name: String,
     workflowId: String,
-    steps: [StepSchema]
+    steps: [StepSchema],
+    compileError: [ErrorSchema],
+    testError: [ErrorSchema],
 },
-    { timestamps: true }
-)
+    { timestamps: true })
 
 const UserContracts = mongoose.model("userContracts", UserContractSchema);
 

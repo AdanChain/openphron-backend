@@ -21,6 +21,8 @@ const userContractService = {
             workflowId: 1,
             name: contractName,
             steps: steps,
+            compileError: [],
+            testError: [],
         }
         userContract = await userContractsDA.create(userContract);
 
@@ -113,6 +115,11 @@ const userContractService = {
     deleteContractById: async (filter: any) => {
         const { _id } = filter;
         await userContractsDA.delete({ _id });
+    },
+    saveError: async (filter: any) => {
+        const { contractId, error } = filter;
+
+        await userContractsDA.saveError({ contractId, error });
     },
     renameContractById: async (filter: any) => {
         const { name, _id } = filter;

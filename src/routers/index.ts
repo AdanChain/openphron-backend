@@ -4,6 +4,8 @@ import { contractController, workflowContoller } from "../contract/controllers";
 import { verifySignatureMiddleware } from "../middleware";
 import costController from "../contract/controllers/cost";
 import adminRoutes from '../admin/routes';
+import apiRouter from "../api/routes";
+import { apiKeyController } from "../api/controller";
 const routers = express.Router();
 
 
@@ -26,6 +28,8 @@ routers.post("/token/reduce", verifySignatureMiddleware, costController.reduceTo
 routers.get("/token", verifySignatureMiddleware, costController.getTokens);
 routers.post("/token/subscribe", verifySignatureMiddleware, costController.subscribeTokens)
 
+routers.post("/contract/save-error", verifySignatureMiddleware, contractController.saveError);
+///////////////admin routes///////////////
 
 
 
@@ -38,11 +42,17 @@ routers.get("/oracle/:id", verifySignatureMiddleware, oracleController.getById)
 routers.get("/question", verifySignatureMiddleware, questionController.gets)
 routers.get("/question/:id", verifySignatureMiddleware, questionController.getById)
 routers.get("/question/oracle/:oracleId", verifySignatureMiddleware, questionController.questionsForOracle)
+routers.post("/question", verifySignatureMiddleware, questionController.update)
 
 routers.get("/subscription/user", verifySignatureMiddleware, subscriptionController.getByUser)
 routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscriptionController.getsByOracle)
 
 // Add admin routes
 routers.use('/admin', adminRoutes);
+
+///////////API Routers///////////////
+apiRouter.post('/key', verifySignatureMiddleware, apiKeyController.createApiKey);
+apiRouter.get('/key', verifySignatureMiddleware, apiKeyController.getApiKeys);
+apiRouter.delete('/key/:apiKey', verifySignatureMiddleware, apiKeyController.deleteApiKey);
 
 export default routers;
