@@ -6,6 +6,7 @@ export const MessageSchema = new Schema({
 })
 
 const ErrorSchema = new Schema({
+    role: String,
     content: String,
     time: { type: Date, default: new Date() }
 })
