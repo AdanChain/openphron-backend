@@ -45,7 +45,6 @@ export const verifyApiKeyMiddleware = async (req: any, res: any, next: any) => {
         if (!apiKey) {
             return res.status(401).json({ error: 'API key required' });
         }
-        console.log("apiKey: ", apiKey);
         const apiKeyData = await apiKeyService.availableApiKey(apiKey);
         if (!apiKeyData) {
             return res.status(401).json({ error: 'Invalid API key' });
