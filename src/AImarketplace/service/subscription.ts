@@ -25,11 +25,11 @@ const subscriptionService = {
         }
     },
     getByUser: async (user: string) => {
-        const subscriptionData = await subscriptionDA.find({ user: user });
+        const subscriptionData = await subscriptionDA.finds({ user: user });
         return subscriptionData;
     },
     getsByOracle: async (oracleId: string) => {
-        const subscriptionData = await subscriptionDA.find({ oracleId: oracleId })
+        const subscriptionData = await subscriptionDA.finds({ oracleId: oracleId })
         return subscriptionData;
     }
 }

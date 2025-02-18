@@ -1,5 +1,4 @@
 import { ethers } from "ethers";
-import { apiKeyController } from "../api/controller";
 import { apiKeyService } from "../api/service";
 
 export const verifySignatureMiddleware = (req: any, res: any, next: any) => {
@@ -43,11 +42,11 @@ export const verifyApiKeyMiddleware = async (req: any, res: any, next: any) => {
     try {
         const { apiKey } = req.query;
         if (!apiKey) {
-            return res.status(401).json({ error: 'API key required' });
+            return res.status(401).json({ success: false, error: 'API key required' });
         }
         const apiKeyData = await apiKeyService.availableApiKey(apiKey);
         if (!apiKeyData) {
-            return res.status(401).json({ error: 'Invalid API key' });
+            return res.status(401).json({ success: false, error: 'Invalid API key' });
         }
         req.apiKey = apiKeyData;
         next();

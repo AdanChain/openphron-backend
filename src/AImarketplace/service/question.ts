@@ -12,7 +12,7 @@ const questionService = {
         return questionData;
     },
     questionsForOracle: async (oracleId: string) => {
-        const questionData = await questionDA.find({ oracleId: oracleId })
+        const questionData = await questionDA.finds({ oracleId: oracleId })
         return questionData;
     },
     update: async (data: any) => {
@@ -31,7 +31,7 @@ const questionService = {
         return questionData;
     },
     gets: async () => {
-        const questionData = await questionDA.find({})
+        const questionData = await questionDA.finds({})
         return questionData;
     },
 }

@@ -13,8 +13,8 @@ class BaseDataAccess {
         const result = await newData.save();
         return result;
     }
-    async find(filter: any) {
-        const result = await this.model.find(filter);
+    async finds(filter?: any) {
+        const result = await this.model.find(filter ? filter : {});
         return result;
     }
     async findOne(filter: any) {

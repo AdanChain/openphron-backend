@@ -17,9 +17,12 @@ const oracleService = {
         return oracleData;
     },
     gets: async () => {
-        const oracleData = await oracleDA.find({})
-        // console.log('service oracle Data ', oracleData)
+        const oracleData = await oracleDA.finds({})
         return oracleData;
+    },
+    isOwnerById: async (oracleId: string, owner: string) => {
+        const oracleData = await oracleDA.findOne({ id: oracleId, owner: owner })
+        return oracleData ? true : false;
     }
 }
 

@@ -1,10 +1,8 @@
 import express from 'express';
 import { verifyApiKeyMiddleware } from '../../middleware';
+import processRequest from '../controller/processRequest';
 const apiRouter = express.Router();
 
-apiRouter.post(`/`, verifyApiKeyMiddleware, (req: any, res: any) => {
-    const { apiKey } = req.query;
-    res.status(200).json({ message: 'API key verified ' + apiKey });
-});
+apiRouter.post(`/`, verifyApiKeyMiddleware, processRequest.classify);
 
 export default apiRouter;
