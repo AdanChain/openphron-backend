@@ -12,7 +12,7 @@ export const generateApiKey = (hint?: string): string => {
 
     const randomValues = new Uint8Array(keyLength);
     crypto.getRandomValues(randomValues);
-    console.log(randomValues);
+    // console.log(randomValues);
 
     let randomPart = '';
     for (let i = 0; i < keyLength; i++) {

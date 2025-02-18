@@ -1,5 +1,6 @@
 import { response } from "express";
 import userContractService from "../services/userContract";
+import { access } from "fs";
 
 const contractController = {
     sendInitMessage: async (req: any, res: any): Promise<void> => {
@@ -35,8 +36,8 @@ const contractController = {
     },
     shareContract: async (req: any, res: any): Promise<void> => {
         try {
-            const { id } = req.params;
-            const result = await userContractService.shareContract({ _id: id });
+            const { id, isPublic } = req.body;
+            const result = await userContractService.shareContract({ _id: id, isPublic });
             res.json(result);
         } catch (error: any) {
             res.json(error.message);
@@ -45,12 +46,12 @@ const contractController = {
     },
     getSharedContract: async (req: any, res: any): Promise<void> => {
         try {
-            const { accessToken } = req.params;
-            const result = await userContractService.getSharedContract({ accessToken });
+            const {access_token} = req.params;
+            const result = await userContractService.getSharedContract(access_token);
             res.json(result);
         } catch (error: any) {
             res.json(error.message);
-            console.log("get-shared-contract-error: ", error.message);
+            console.log("get-shared-contracts-error: ", error.message);
         }
     },
     saveResult: async (req: any, res: any): Promise<void> => {
@@ -81,7 +82,7 @@ const contractController = {
         } catch (error: any) {
             console.log("save-error-error", error.message);
             res.json(error.message);
-        }       
+        }
     },
     renameContract: async (req: any, res: any) => {
         try {

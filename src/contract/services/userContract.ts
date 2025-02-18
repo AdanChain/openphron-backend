@@ -78,8 +78,10 @@ const userContractService = {
         await userContractsDA.saveResult({ _id, stepId, content: response });
         return response;
     },
+
     shareContract: async (filter: any) => {
-        const userContract = await userContractsDA.findOne(filter);
+        const { _id, isPublic } = filter;
+        const userContract = await userContractsDA.findOne({ _id });
         const accessToken = uuidv4();
         const sharedAt = new Date();
         const expiresAt = new Date(sharedAt.getTime() + 1000 * 60 * 60 * 24 * 30); // 30 days
@@ -95,15 +97,14 @@ const userContractService = {
             access_token: accessToken,
             sharedAt: sharedAt,
             expiresAt: expiresAt,
-            visibility: "public"
+            public: isPublic,
         }
 
         await shareContractsDA.create(sharedContract);
         return accessToken;
     },
-    getSharedContract: async (filter: any) => {
-        const { accessToken } = filter;
-        const sharedContract = await shareContractsDA.findOne({ access_token: accessToken });
+    getSharedContract: async (access_token: string) => {
+        const sharedContract = await shareContractsDA.finds({ access_token });
         if (!sharedContract) {
             return { error: "Shared contract not found" };
         }
@@ -119,7 +120,6 @@ const userContractService = {
     saveError: async (filter: any) => {
         const { contractId, error } = filter;
 
-
         const message = {
             role: "user",
             content: error.message,
@@ -127,11 +127,11 @@ const userContractService = {
         }
         await userContractsDA.saveError({ contractId, error: message });
         console.log("message: ", message);
-        const result = await gemini.generateText({ contents: [message], instruction:process.env.INSTRUCTION });
+        const result = await gemini.generateText({ contents: [message], instruction: process.env.INSTRUCTION });
         const newDate = {
-            role:"reason",
-            content:result,
-            form:error.form
+            role: "reason",
+            content: result,
+            form: error.form
         }
         console.log("newDate: ", newDate);
         await userContractsDA.saveError({ contractId, error: newDate });
@@ -155,7 +155,7 @@ const userContractService = {
             updatedAt: sharedContract.updatedAt
         }
 
-        await userContractsDA.create( _contract );
+        await userContractsDA.create(_contract);
     }
 }
 
