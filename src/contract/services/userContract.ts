@@ -57,7 +57,7 @@ const userContractService = {
     });
 
     const responseMessage = {
-      role: "model",
+      role: "assistant",
       content: response,
     };
     await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
