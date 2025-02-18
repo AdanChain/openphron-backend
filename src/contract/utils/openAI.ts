@@ -14,7 +14,7 @@ class OPENAI {
             content: message
         }];
         const data = {
-            model: "gpt-3.5-turbo",
+            model: "chatgpt-4o-latest",
             messages: contents
         };
         return this._generateFromOpenAI(data);
@@ -26,7 +26,7 @@ class OPENAI {
             : contents;
         
         const data = {
-            model: "gpt-4o-mini",
+            model: "chatgpt-4o-latest",
             messages: messages
         };
         return this._generateFromOpenAI(data);
