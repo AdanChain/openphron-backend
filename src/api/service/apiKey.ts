@@ -1,10 +1,10 @@
 import { apiKeyDA } from "../data-access";
-import { formatDate, generateApiKey } from "../utils";
+import { formatDate, generateApiKeyWithCryptoJs } from "../utils";
 
 const apiKeyService = {
     createApiKey: async (userId: string | undefined, name?: string) => {
         if (!userId) return false;
-        const apiKey = generateApiKey(name);
+        const apiKey = generateApiKeyWithCryptoJs(name);
 
         if (await apiKeyDA.apiKeyExists(apiKey)) {
             await apiKeyService.createApiKey(userId, name);

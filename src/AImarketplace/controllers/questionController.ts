@@ -30,7 +30,7 @@ const questionController = {
             res.status(500).json({ error: error.message });
         }
     },
-    update: async (req: Request, res: Response) => {
+    update: async (req: Request, res: Response) => {    
         try {
             const questionData = await questionService.update(req.body);
             res.status(200).json(questionData);

@@ -41,7 +41,7 @@ export const generateApiKeyWithUUID = (hint?: string): string => {
 export const generateApiKeyWithCryptoJs = (hint?: string): string => {
     const keyLength = 30;
 
-    const randomBytes = CryptoJS.lib.WordArray.random(16).toString(CryptoJS.enc.Base64)
+    const randomBytes = CryptoJS.lib.WordArray.random(32).toString(CryptoJS.enc.Base64)
         .replace(/[^A-Za-z0-9]/g, '');
 
     const transformedHint = transformHint(hint);
