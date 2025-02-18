@@ -2,10 +2,10 @@ import { oracleService } from "../service";
 import { Request, Response } from "express";
 
 const oracleController = {
-    
     gets: async (req: Request, res: Response): Promise<void> => {
         try {
             const oracleData = await oracleService.gets();
+            // console.log('controller oracle Data ', oracleData)
             res.status(200).json(oracleData);
         } catch (error: any) {
             res.status(500).json({

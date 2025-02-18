@@ -7,98 +7,56 @@ import {
 import { contractController, workflowContoller } from "../contract/controllers";
 import { verifySignatureMiddleware } from "../middleware";
 import costController from "../contract/controllers/cost";
+import adminRoutes from '../admin/routes';
+import apiRouter from "../api/routes";
+import { apiKeyController } from "../api/controller";
 const routers = express.Router();
 
 ///////////Contract Routers///////////////
-routers.get(
-  "/contract",
-  verifySignatureMiddleware,
-  contractController.getContracts
-);
-routers.post(
-  "/contract",
-  verifySignatureMiddleware,
-  contractController.sendInitMessage
-);
-routers.post(
-  "/contract/message",
-  verifySignatureMiddleware,
-  contractController.sendMessage
-);
-routers.post(
-  "/contract/deployed",
-  verifySignatureMiddleware,
-  contractController.addDeployedContracts
-);
-routers.delete(
-  "/contract/:_id",
-  verifySignatureMiddleware,
-  contractController.deleteContract
-);
+routers.get("/contract", verifySignatureMiddleware, contractController.getContracts);
+routers.post("/contract", verifySignatureMiddleware, contractController.sendInitMessage);
+routers.post("/contract/message", verifySignatureMiddleware, contractController.sendMessage);
+routers.delete("/contract/:_id", verifySignatureMiddleware, contractController.deleteContract)
+routers.post("/contract/share", contractController.shareContract);
+routers.get("/contract/shared/:access_token", contractController.getSharedContract);
+routers.post("/contract/rename", contractController.renameContract);
+routers.post("/contract/shared", contractController.addSharedContract);
 
-routers.post(
-  "/contract/save-result",
-  verifySignatureMiddleware,
-  contractController.saveResult
-);
+routers.post("/contract/save-result", verifySignatureMiddleware, contractController.saveResult);
 
+routers.post("/contract/deployed", verifySignatureMiddleware, contractController.addDeployedContracts);
 routers.get("/contract/deployed", contractController.getDeployedContracts);
 
-routers.get(
-  "/contract/user/deployed/:id",
-  verifySignatureMiddleware,
-  contractController.getUserDeployedContracts
-);
+routers.get("/contract/user/deployed/:id", verifySignatureMiddleware, contractController.getUserDeployedContracts);
 
-routers.get(
-  "/workflow",
-  verifySignatureMiddleware,
-  workflowContoller.getWorkflows
-);
-routers.get(
-  "/workflow/:id",
-  verifySignatureMiddleware,
-  workflowContoller.getWorkflowById
-);
+routers.get("/workflow", verifySignatureMiddleware, workflowContoller.getWorkflows);
+routers.get("/workflow/:id", verifySignatureMiddleware, workflowContoller.getWorkflowById);
 
-routers.post(
-  "/token/reduce",
-  verifySignatureMiddleware,
-  costController.reduceTokens
-);
+routers.post("/token/reduce", verifySignatureMiddleware, costController.reduceTokens);
 routers.get("/token", verifySignatureMiddleware, costController.getTokens);
-routers.post(
-  "/token/subscribe",
-  verifySignatureMiddleware,
-  costController.subscribeTokens
-);
+routers.post("/token/subscribe", verifySignatureMiddleware, costController.subscribeTokens)
+
+routers.post("/contract/save-error", verifySignatureMiddleware, contractController.saveError);
 
 //////////////Oracle Routers/////////////
 
 routers.get("/oracle", verifySignatureMiddleware, oracleController.gets);
 routers.get("/oracle/:id", verifySignatureMiddleware, oracleController.getById);
 
-routers.get("/question", verifySignatureMiddleware, questionController.gets);
-routers.get(
-  "/question/:id",
-  verifySignatureMiddleware,
-  questionController.getById
-);
-routers.get(
-  "/question/oracle/:oracleId",
-  verifySignatureMiddleware,
-  questionController.questionsForOracle
-);
+routers.get("/question", verifySignatureMiddleware, questionController.gets)
+routers.get("/question/:id", verifySignatureMiddleware, questionController.getById)
+routers.get("/question/oracle/:oracleId", verifySignatureMiddleware, questionController.questionsForOracle)
+routers.post("/question", verifySignatureMiddleware, questionController.update)
 
-routers.get(
-  "/subscription/user",
-  verifySignatureMiddleware,
-  subscriptionController.getByUser
-);
-routers.get(
-  "/subscription/oracle/:oracleId",
-  verifySignatureMiddleware,
-  subscriptionController.getsByOracle
-);
+routers.get("/subscription/user", verifySignatureMiddleware, subscriptionController.getByUser);
+routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscriptionController.getsByOracle);
+
+// Add admin routes
+routers.use('/admin', adminRoutes);
+
+///////////API Routers///////////////
+routers.post('/key', verifySignatureMiddleware, apiKeyController.createApiKey);
+routers.get('/key', verifySignatureMiddleware, apiKeyController.getApiKeys);
+routers.delete('/key/:apiKey', verifySignatureMiddleware, apiKeyController.deleteApiKey);
 
 export default routers;

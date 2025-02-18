@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/index.ts",
+    "api": "ts-node src/test.ts",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -19,10 +21,12 @@
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
     "@types/axios": "^0.14.4",
+    "@types/crypto-js": "^4.2.2",
     "@types/jest": "^29.5.14",
     "@types/node-cron": "^3.0.11",
     "@types/uuid": "^10.0.0",
     "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.4.7",
     "ethers": "5.7.2",
     "express": "^4.21.2",
@@ -32,5 +36,9 @@
     "openai": "^4.83.0",
     "ts-node": "^10.9.2",
     "uuid": "^11.0.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }

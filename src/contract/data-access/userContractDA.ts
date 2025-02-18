@@ -1,7 +1,5 @@
 import { costService } from "../services";
-import { tokenize } from "../utils";
 import BaseDataAccess from "./baseDataAccess";
-import { Document, Model } from "mongoose";
 
 class UserContractDA extends BaseDataAccess {
     constructor(dbModel: any) {
@@ -40,6 +38,20 @@ class UserContractDA extends BaseDataAccess {
         }
         throw new Error("User contract or step not found");
     }
-}
+    async saveError(data: { contractId: string; error: any }): Promise<string> {
+        const { contractId, error } = data;
+        const userContract = await this.findOne({ _id: contractId });
+        if (userContract) {
+            if(error.form === "compile"){
+                userContract.compileError.push({role:error.role,content:error.content,time:new Date()});
+            }else{
+                userContract.testError.push({role:error.role,content:error.content,time:new Date()} );
+            }
+            await this.update({ _id: contractId }, userContract);
+            return "success";
+        }
+        throw new Error("User contract not found");
+    }
+}   
 
 export default UserContractDA;

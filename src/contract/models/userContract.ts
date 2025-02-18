@@ -1,8 +1,14 @@
 import mongoose, { Schema } from "mongoose";
 
-const MessageSchema = new Schema({
+export const MessageSchema = new Schema({
     role: String,
     content: String
+})
+
+const ErrorSchema = new Schema({
+    role: String,
+    content: String,
+    time: { type: Date, default: new Date() }
 })
 
 const StepSchema = new Schema({
@@ -15,10 +21,11 @@ const UserContractSchema = new Schema({
     userAddress: String,
     name: String,
     workflowId: String,
-    steps: [StepSchema]
+    steps: [StepSchema],
+    compileError: [ErrorSchema],
+    testError: [ErrorSchema],
 },
-    { timestamps: true }
-)
+    { timestamps: true })
 
 const UserContracts = mongoose.model("userContracts", UserContractSchema);
 
