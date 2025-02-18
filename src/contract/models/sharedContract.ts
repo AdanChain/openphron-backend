@@ -17,7 +17,7 @@ const SharedContractSchema = new mongoose.Schema({
     name: String,
     steps: [StepSchema],
     workflowId: String,
-    visibility: String,
+    public: Boolean,
     sharedAt: Date,
     expiresAt: Date,
     createdAt: Date,
