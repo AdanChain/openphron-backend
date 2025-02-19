@@ -45,6 +45,18 @@ const adminController = {
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
+    },
+
+    deleteError: async (req: any, res: any) => {
+        try {
+            const {contractId,errorId,errorType} = req.body;
+            console.log(contractId,errorId,errorType);
+            const error = await adminService.deleteError(contractId,errorId,errorType);
+            res.json(error);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+            
+        }
     }
 };
 

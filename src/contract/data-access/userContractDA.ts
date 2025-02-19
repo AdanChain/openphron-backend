@@ -52,6 +52,19 @@ class UserContractDA extends BaseDataAccess {
         }
         throw new Error("User contract not found");
     }
+
+    async deleteError(id: string, errorId: string, errorType: string) {
+     try {
+        if(errorType === "compile"){    
+            const result = await this.update({_id: id}, { $pull: { compileError: {_id: errorId} } });
+            return "success";
+        }
+        const result = await this.update({_id: id}, { $pull: { testError: {_id: errorId} } });
+        return  "success";
+     } catch (error) {
+        
+     }
+    }
 }   
 
 export default UserContractDA;

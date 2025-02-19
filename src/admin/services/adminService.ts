@@ -99,6 +99,15 @@ const adminService = {
         } catch (error: any) {
             throw new Error(`Error deleting user: ${error.message}`);
         }
+    },
+
+    deleteError: async (id: string, errorId: string, errorType: string) => {
+        try {
+            const result = await userContractsDA.deleteError(id, errorId, errorType);
+            return result;
+        } catch (error: any) {
+            throw new Error(`Error deleting error: ${error.message}`);
+        }
     }
 };
 // Helper function to get most common error
