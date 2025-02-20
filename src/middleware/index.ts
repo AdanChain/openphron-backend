@@ -42,7 +42,6 @@ export const verifyApiKeyMiddleware = async (req: any, res: any, next: any) => {
     try {
         const { apiKey } = req.query;
         const address = req.headers.authentication;
-        console.log("headers: ", address);
         if (!apiKey || !address) {
             return res.status(401).json({ success: false, error: 'Authentication required' });
         }

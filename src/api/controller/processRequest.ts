@@ -24,7 +24,9 @@ const processRequest = {
     },
     question: async (address: string, data: any) => {
         const isOwner = await oracleService.isOwnerById(data.oracleId, address);
-        if (!isOwner) throw new Error("You are not owner of this oracle");
+        if (!isOwner) throw new Error("You are not owner of this oracle!");
+        const isExist = await questionService.isExist(data);
+        if (!isExist) throw new Error("OracleId or questionId is invalid!");
         const result = await questionService.update(data);
         return result;
     }
