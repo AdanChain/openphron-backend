@@ -127,7 +127,6 @@ const userContractService = {
       form: error.form
     }
     await userContractsDA.saveError({ contractId, error: message });
-    console.log("message: ", message);
     const result = await gemini.generateText({ contents: [message], instruction: process.env.INSTRUCTION });
     const newDate = {
       role: "reason",

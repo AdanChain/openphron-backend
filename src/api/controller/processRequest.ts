@@ -3,11 +3,12 @@ import { oracleService, questionService } from "../../AImarketplace/service";
 const processRequest = {
     classify: async (req: any, res: any) => {
         try {
+            const address = req.user;
             const { contents } = req.body;
 
             const results = await Promise.all(
                 contents.map(async (content: any) => {
-                    const { address, updateType, description } = content;
+                    const { updateType, description } = content;
                     switch (updateType) {
                         case "question":
                             return await processRequest.question(address, description);

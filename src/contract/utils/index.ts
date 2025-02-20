@@ -1,8 +1,8 @@
 import GEMINI from "./gemini";
 import OPENAI from "./openAI";
 
-const gemini = new OPENAI(process.env.OPENAI_API_KEY as string);
-// const gemini = new GEMINI(process.env.GEMINI_KEY as string);
+// const gemini = new OPENAI(process.env.OPENAI_API_KEY as string);
+const gemini = new GEMINI(process.env.GEMINI_KEY as string);
 
 const prettyJSON = (data: any): string => JSON.stringify(data, null, 2);
 

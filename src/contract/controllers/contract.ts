@@ -140,7 +140,6 @@ const contractController = {
       const userDeployedContract =
         await userContractService.getUserDeployedContract(id);
 
-      console.log("userDeployedContract", userDeployedContract);
       const contractsData = userDeployedContract.map((d: any) => {
         return {
           userAddress: d.userAddress,
