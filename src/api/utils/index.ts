@@ -47,7 +47,7 @@ export const generateApiKeyWithCryptoJs = (hint?: string): string => {
     const transformedHint = transformHint(hint);
     const modifiedRandom = randomBytes
         .split('')
-        .map((char, i) => (i % 3 === 0 ? String.fromCharCode(char.charCodeAt(0) + transformedHint % 7) : char))
+        .map((char: string, i: number) => (i % 3 === 0 ? String.fromCharCode(char.charCodeAt(0) + transformedHint % 7) : char))
         .join('')
         .replace(/[^A-Za-z0-9]/g, '');
 

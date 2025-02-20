@@ -10,6 +10,7 @@ router.get('/getUserState', adminController.getUserState);
 router.get('/updateContracts', adminController.updateContracts);
 router.post('/addUser', adminController.addUser);
 router.delete('/deleteUser/:address', adminController.deleteUser);
+router.delete('/deleteError', adminController.deleteError);
 
 // Error tracking
 
