@@ -126,16 +126,9 @@ const userContractService = {
       content: error.message,
       form: error.form
     }
-    await userContractsDA.saveError({ contractId, error: message });
-    console.log("message: ", message);
+    const id = await userContractsDA.saveError({ contractId, error: message });
     const result = await gemini.generateText({ contents: [message], instruction: process.env.INSTRUCTION });
-    const newDate = {
-      role: "reason",
-      content: result,
-      form: error.form
-    }
-    console.log("newDate: ", newDate);
-    await userContractsDA.saveError({ contractId, error: newDate });
+    await userContractsDA.saveErrorReason({ contractId, id, result, errorType:error.form });
   },
   renameContractById: async (filter: any) => {
     const { name, _id } = filter;

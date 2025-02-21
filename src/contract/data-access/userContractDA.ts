@@ -42,29 +42,54 @@ class UserContractDA extends BaseDataAccess {
         const { contractId, error } = data;
         const userContract = await this.findOne({ _id: contractId });
         if (userContract) {
-            if(error.form === "compile"){
-                userContract.compileError.push({role:error.role,content:error.content,time:new Date()});
-            }else{
-                userContract.testError.push({role:error.role,content:error.content,time:new Date()} );
+            if (error.form === "compile") {
+                userContract.compileError.push({ role: error.role, content: error.content, time: new Date(), reason: null });
+            } else {
+                userContract.testError.push({ role: error.role, content: error.content, time: new Date(), reason: null });
             }
             await this.update({ _id: contractId }, userContract);
+            if (error.form === "compile") {
+                const contract = await this.findOne({ _id: contractId });
+                const id = contract.compileError[contract.compileError.length - 1]._id
+                return id;
+            }
+            else {
+                const contract = await this.findOne({ _id: contractId });
+                const id = contract.testError[contract.testError.length - 1]._id
+                return id;
+            }
+
+        }
+        throw new Error("User contract not found");
+    }
+
+    async saveErrorReason(data: { contractId: any, id: any, result: any, errorType: any }): Promise<string> {
+        const { contractId, id, result, errorType } = data;
+        const userContract = await this.findOne({ _id: contractId });
+        if (userContract) {
+            if (errorType === "compile") {
+                await this.update({ _id: contractId, "compileError._id": id }, { $set: { "compileError.$.reason": result } })
+               
+            } else {
+                await this.update({ _id: contractId, "testError._id": id }, { $set: { "testError.$.reason": result } })
+            };
             return "success";
         }
         throw new Error("User contract not found");
     }
 
     async deleteError(id: string, errorId: string, errorType: string) {
-     try {
-        if(errorType === "compile"){    
-            const result = await this.update({_id: id}, { $pull: { compileError: {_id: errorId} } });
+        try {
+            if (errorType === "compile") {
+                const result = await this.update({ _id: id }, { $pull: { compileError: { _id: errorId } } });
+                return "success";
+            }
+            const result = await this.update({ _id: id }, { $pull: { testError: { _id: errorId } } });
             return "success";
+        } catch (error) {
+
         }
-        const result = await this.update({_id: id}, { $pull: { testError: {_id: errorId} } });
-        return  "success";
-     } catch (error) {
-        
-     }
     }
-}   
+}
 
 export default UserContractDA;
