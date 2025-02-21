@@ -133,7 +133,6 @@ const userContractService = {
       content: result,
       form: error.form
     }
-    console.log("newDate: ", newDate);
     await userContractsDA.saveError({ contractId, error: newDate });
   },
   renameContractById: async (filter: any) => {
@@ -158,7 +157,6 @@ const userContractService = {
     await userContractsDA.create(_contract);
   },
   addDeployedContract: async (data: any) => {
-    console.log(data);
     const userContract = await DeployedContracts.create({ ...data });
     //deployedContractsDA.create(data);
 

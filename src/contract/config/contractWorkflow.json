@@ -26,15 +26,8 @@
       "action": false
     },
     {
-      "name": "tester",
-      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract. Tests should be written using Hardhat's testing framework. Create code in TypeScript. When interacting with external contracts, use the 'any' type for fakes and fake contracts from @defi-wonderland/smock. If using smock, you should add import chai from 'chai'; and chai.use(smock.matchers);. Do not use any types in contracts from 3rd party modules such as openZepplin. Use ethers v5 and @nomiclabs/hardhat-ethers. Provide only test case code without any other explanation. Requests for modifications should only change the test case code without any other explanation",
-      "result_instruction": "Final code has been approved, Extract the finalized code. I need only test script",
-      "isAuto": true,
-      "action": false
-    },
-    {
       "name": "action",
-      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract, covering all relevant functionalities and edge cases. The tests should be written using Hardhat's testing framework and should aim to: Verify correct functionality, Identify potential vulnerabilities, Assess gas efficiency, Ensure robustness. The test suite should be well-structured, easy to understand, and maintainable. Use clear and concise naming conventions for test cases and assertions. Give only test case code without other explainations",
+      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract. Tests should be written using Hardhat's testing framework. Create code in TypeScript. When interacting with external contracts, use the 'any' type for fakes and fake contracts from @defi-wonderland/smock. If using smock, you should add import chai from 'chai'; and chai.use(smock.matchers);. Do not use any types in contracts from 3rd party modules such as openZepplin. Use ethers v5 and @nomiclabs/hardhat-ethers. Provide only test case code without any other explanation. Requests for modifications should only change the test case code without any other explanation",
       "result_instruction": "Final code has been approved, Extract the finalized code. I need only test script",
       "isAuto": true,
       "action": true
