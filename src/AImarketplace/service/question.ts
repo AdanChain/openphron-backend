@@ -34,6 +34,12 @@ const questionService = {
         const questionData = await questionDA.finds({})
         return questionData;
     },
+
+    isExist: async (data: any) => {
+        const { oracleId, id } = data;
+        const questionData = await questionDA.findOne({ oracleId, id })
+        return questionData ? true : false;
+    }
 }
 
 export default questionService;
