@@ -16,6 +16,10 @@ const QuestionSchema = new mongoose.Schema({
     id: {
         type: String,
         require: true
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
     }
 })
 

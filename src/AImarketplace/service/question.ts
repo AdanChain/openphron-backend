@@ -21,7 +21,8 @@ const questionService = {
             id,
             oracleId,
             question,
-            answer
+            answer,
+            timestamp: new Date()
         })
         return questionData;
     },

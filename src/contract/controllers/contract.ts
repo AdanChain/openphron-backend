@@ -135,10 +135,7 @@ const contractController = {
     try {
       const { id } = req.params;
 
-      console.log("getUser deployed contracts", id);
-
-      const userDeployedContract =
-        await userContractService.getUserDeployedContract(id);
+      const userDeployedContract = await userContractService.getUserDeployedContract(id);
 
       const contractsData = userDeployedContract.map((d: any) => {
         return {
