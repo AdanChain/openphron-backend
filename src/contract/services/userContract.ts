@@ -8,10 +8,14 @@ import { DeployedContracts } from '../models';
 
 const userContractService = {
   create: async (data: CreateContractData) => {
-    const { userAddress, initMessage } = data;
+    const { userAddress, initMessage, chatMode } = data;
+    console.log(initMessage, chatMode);
 
-    const contractName = await assistorService.nameFromText(initMessage, userAddress);
-    const workflow = await workflowService.getById(1);
+    const contractName = await assistorService.nameFromText(
+      initMessage,
+      userAddress
+    );
+    const workflow = await workflowService.getById(Number(chatMode));
     const assistors = workflow.assistors;
     const steps = assistors.map(() => ({ history: [] }));
 
@@ -19,7 +23,7 @@ const userContractService = {
     let userContract: any = {
       id: uniqueId,
       userAddress,
-      workflowId: 1,
+      workflowId: Number(chatMode),
       name: contractName,
       steps: steps,
       compileError: [],
@@ -165,13 +169,12 @@ const userContractService = {
     const _limit = parseInt(limit, 10) || 1;
     // Calculate skip value
     const skip = (_page - 1) * _limit;
-    const deployedContracts = await deployedContractsDA.finds(
-      { address: { $ne: "", $exists: true } },
-      {
-        skip,
-        limit: _limit,
-      }
-    );
+    const deployedContracts = await DeployedContracts.find({
+      address: { $ne: "", $exists: true },
+    })
+      .skip(skip)
+      .limit(_limit)
+      .sort({ createdAt: -1 });
     const totalContracts = await DeployedContracts.countDocuments({
       address: { $ne: "", $exists: true },
     });
@@ -190,7 +193,7 @@ const userContractService = {
   getUserDeployedContract: async (id: any) => {
     const userDeployedContracts = await DeployedContracts.find({
       contractId: id,
-    });
+    }).sort({ createdAt: 1 });
 
     return userDeployedContracts;
   },
