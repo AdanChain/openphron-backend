@@ -23,18 +23,22 @@ const ADMIN_ADDRESSES = process.env.ADMIN_ADDRESSES ? process.env.ADMIN_ADDRESSE
 
 export const verifyAdmin = async (req: any, res: any, next: any) => {
     try {
-        const userAddress = req.user;
+        const authentication = req.headers.authentication;
+        if (!authentication) {
+            throw new Error("No authentication header found!");
+        }
+        const { address } = JSON.parse(authentication);
+        const userAddress = address;
         if (!userAddress) {
-            return res.status(401).json({ error: 'Authentication required' });
+            return res.json({ success:false, error: 'Authentication required' });
         }
 
-        if (!ADMIN_ADDRESSES.includes(userAddress.toLowerCase())) {
-            return res.status(403).json({ error: 'Admin access required' });
+        if (!ADMIN_ADDRESSES.includes(userAddress)) {
+            return res.json({ success:false, error: 'Admin access required' });
         }
-
         next();
     } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.json({ error: error.message });
     }
 };
 
