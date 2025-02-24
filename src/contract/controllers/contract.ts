@@ -6,8 +6,12 @@ const contractController = {
   sendInitMessage: async (req: any, res: any): Promise<void> => {
     try {
       const userAddress = req.user;
-      const { initMessage } = req.body;
-      const userContract = await userContractService.create({ userAddress, initMessage });
+      const { initMessage, chatMode } = req.body;
+      const userContract = await userContractService.create({
+        userAddress,
+        initMessage,
+        chatMode,
+      });
       res.json(userContract);
     } catch (error: any) {
       console.log("sendInitMessage-error: ", error.message);
