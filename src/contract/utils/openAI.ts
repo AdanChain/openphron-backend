@@ -93,7 +93,7 @@ class OPENAI {
 
     private getAgent() {
         const proxyHost = process.env.PROXY_HOST;
-        const proxyPort = 42567; // Replace with your proxy's port
+        const proxyPort = process.env.PROXY_PORT; // Replace with your proxy's port
         const proxyUser = process.env.PROXY_USER; // Optional
         const proxyPass = process.env.PROXY_PASS; // Optional
         // Create a proxy agent

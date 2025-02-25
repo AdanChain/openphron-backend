@@ -75,6 +75,7 @@ const userContractService = {
   saveResult: async (filter: any) => {
     const { _id, stepId } = filter;
     const userContract = await userContractsDA.findOne({ _id });
+
     const response = await assistorService.extractResult({
       workflowId: userContract.workflowId,
       stepId,
@@ -132,7 +133,7 @@ const userContractService = {
     }
     const id = await userContractsDA.saveError({ contractId, error: message });
     const result = await gemini.generateText({ contents: [message], instruction: process.env.INSTRUCTION });
-    await userContractsDA.saveErrorReason({ contractId, id, result, errorType:error.form });
+    await userContractsDA.saveErrorReason({ contractId, id, result, errorType: error.form });
   },
   renameContractById: async (filter: any) => {
     const { name, _id } = filter;
