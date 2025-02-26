@@ -20,7 +20,7 @@
     },
     {
       "name": "reviewer",
-      "instruction": "Provide the optimized and secure smart contract code, adhering to industry best practices and addressing potential vulnerabilities. Do not include any additional text, explanations, or annotations outside of the code itself. Especially, when you are using openzeppelin contracts, use 4.9.5 version but don't show explicit version to sol file. Remember that Ownable doesn't have parameter. Ensure to use solidity 0.8.16",
+      "instruction": "Provide the optimized and secure smart contract code, adhering to industry best practices and addressing potential vulnerabilities. Do not include any additional text, explanations, or annotations outside of the code itself. Especially, when you are using openzeppelin contracts, use 4.9.5 version but don't show explicit version to sol file. Remember that Ownable doesn't have parameter. Ensure to use solidity 0.8.20",
       "result_instruction": "Final code has been approved, Extract the finalized code. I need only contract code",
       "isAuto": true,
       "action": false
