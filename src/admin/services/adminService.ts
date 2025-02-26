@@ -1,4 +1,4 @@
-import { costDA, userContractsDA } from "../../contract/data-access";
+import { costDA, shareContractsDA, userContractsDA } from "../../contract/data-access";
 import { BlockNumberModel } from "../../AImarketplace/models";
 import userContractDA from "../../contract/data-access/userContractDA";
 
@@ -76,10 +76,28 @@ const adminService = {
                 name: contract.name,
                 address: contract.userAddress,
                 createdAt: contract.createdAt,
-                steps: [...contract.steps]
+                steps: [...contract.steps],
+                status:0,
+                access_token:"",
+                sharedAt:"",
             }));
         } catch (error: any) {
             throw new Error(`Error getting error logs: ${error.message}`);
+        }
+    },
+
+    getSharedContracts:async () => {
+        try {
+            const sharedContracts = await shareContractsDA.finds();
+            return sharedContracts.map((contract: any) => ({
+                id: contract.id,
+                address: contract.user_address,
+                createdAt: contract.shared_at,
+                access_token: contract.access_token,
+                visibility: contract.visibility,
+            }));
+        } catch (error: any) {
+            throw new Error(`Error getting error share: ${error.message}`);
         }
     },
 

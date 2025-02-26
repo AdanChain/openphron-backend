@@ -11,6 +11,7 @@ router.get('/updateContracts', adminController.updateContracts);
 router.post('/addUser', adminController.addUser);
 router.delete('/deleteUser/:address', adminController.deleteUser);
 router.delete('/deleteError', adminController.deleteError);
+router.get('/sharedContracts', adminController.getSharedContracts);
 
 // Error tracking
 

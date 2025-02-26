@@ -28,6 +28,15 @@ const adminController = {
         }
     },
 
+    getSharedContracts: async (req: any, res: any) => {
+        try {
+            const contracts = await adminService.getSharedContracts();
+            res.status(200).json(contracts);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     addUser: async (req: any, res: any) => {
         try {
             const user = await adminService.addUser(req.body);
