@@ -1,6 +1,7 @@
 import { costDA, shareContractsDA, userContractsDA } from "../../contract/data-access";
 import { BlockNumberModel } from "../../AImarketplace/models";
 import userContractDA from "../../contract/data-access/userContractDA";
+import { apiKeyDA } from "../../api/data-access";
 
 interface User {
     userAddress: string;
@@ -65,6 +66,22 @@ const adminService = {
         }
     },
 
+    getApiKeys:async() => {
+        try {
+            const apiKeys = await apiKeyDA.finds();
+            return apiKeys.map((apiKey: any) => ({
+                id: apiKey._id,
+                address: apiKey.userId,
+                name: apiKey.name,
+                apiKey: apiKey.apiKey,
+                status: apiKey.status,
+                createdAt: apiKey.createdAt,
+            }));
+        } catch (error: any) {
+            throw new Error(`Error getting api keys: ${error.message}`);
+        }
+    },
+
     // Get error logs (from the last 24 hours)
     updateContracts: async () => {
         try {
@@ -91,10 +108,11 @@ const adminService = {
             const sharedContracts = await shareContractsDA.finds();
             return sharedContracts.map((contract: any) => ({
                 id: contract.id,
-                address: contract.user_address,
-                createdAt: contract.shared_at,
+                address: contract.userAddress,
+                sharedAt: contract.sharedAt,
+                expiresAt: contract.expiresAt,
                 access_token: contract.access_token,
-                visibility: contract.visibility,
+                public: contract.public,
             }));
         } catch (error: any) {
             throw new Error(`Error getting error share: ${error.message}`);

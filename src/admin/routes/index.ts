@@ -1,6 +1,5 @@
 import express from 'express';
 import adminController from '../controllers/adminController';
-import { verifyAdmin } from '../../middleware';
 
 const router = express.Router();
 
@@ -12,6 +11,7 @@ router.post('/addUser', adminController.addUser);
 router.delete('/deleteUser/:address', adminController.deleteUser);
 router.delete('/deleteError', adminController.deleteError);
 router.get('/sharedContracts', adminController.getSharedContracts);
+router.get('/getApiKeys', adminController.getApiKeys);
 
 // Error tracking
 
