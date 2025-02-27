@@ -17,7 +17,7 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    timestamp: {
+    updatedAt: {
         type: Date,
         default: Date.now
     }

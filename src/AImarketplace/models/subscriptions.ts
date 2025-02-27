@@ -17,10 +17,7 @@ const SubscriptionSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    expire: {
-        type: String,
-        require: true
-    }
+    expire: Number
 })
 
 const SubscriptionModel = mongoose.model("subscriptions", SubscriptionSchema);

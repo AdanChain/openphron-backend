@@ -4,5 +4,6 @@ import processRequest from '../controller/processRequest';
 const apiRouter = express.Router();
 
 apiRouter.post(`/`, verifyApiKeyMiddleware, processRequest.classify);
+apiRouter.get('/:questionId', processRequest.updateFeeds);
 
 export default apiRouter;

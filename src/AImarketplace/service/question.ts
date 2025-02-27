@@ -1,13 +1,16 @@
 import { questionDA } from "../data-access";
+import { v4 as uuidv4 } from 'uuid';
 
 const questionService = {
     create: async (data: any) => {
         const { id, oracleId, question, answer } = data;
+        // const allQuestions = await questionDA.finds();
+        // const newId = allQuestions[allQuestions.length - 1].id * 1 + 1;
         const questionData = await questionDA.create({
-            id,
+            id: id || uuidv4(),
             oracleId,
             question,
-            answer
+            answer,
         })
         return questionData;
     },

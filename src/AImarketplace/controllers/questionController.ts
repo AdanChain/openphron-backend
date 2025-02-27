@@ -2,7 +2,15 @@ import { questionService } from "../service";
 import { Request, Response } from "express";
 
 const questionController = {
-
+    create: async (req: any, res: any) => {
+        try {
+            const questionData = req.body;
+            const question = await questionService.create(questionData);
+            res.status(200).json(question);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     gets: async (req: Request, res: Response) => {
         try {
             const questionData = await questionService.gets();
@@ -30,7 +38,7 @@ const questionController = {
             res.status(500).json({ error: error.message });
         }
     },
-    update: async (req: Request, res: Response) => {    
+    update: async (req: Request, res: Response) => {
         try {
             const questionData = await questionService.update(req.body);
             res.status(200).json(questionData);

@@ -49,7 +49,7 @@ export const verifyApiKeyMiddleware = async (req: any, res: any, next: any) => {
         if (!apiKeyData) {
             return res.status(401).json({ success: false, error: 'Invalid API key' });
         }
-        req.apiKey = apiKeyData;
+        req.apiKey = apiKey;
         req.user = address;
         next();
         return;
@@ -57,3 +57,12 @@ export const verifyApiKeyMiddleware = async (req: any, res: any, next: any) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+export const updateFeedsMiddleware = async (req: any, res: any, next: any) => {
+    try {
+        
+    } catch (error: any) {
+        res.json({error: error.message})
+        console.log("Error updating Feeds: ", error.message)
+    }
+}
