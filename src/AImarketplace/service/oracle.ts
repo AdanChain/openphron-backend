@@ -1,10 +1,13 @@
 import { oracleDA } from "../data-access";
+import { v4 as uuidv4 } from 'uuid';
 
 const oracleService = {
-    create: async (oracle: Oracle) => {
-        const { id, name, description, subscriptionPrice, owner } = oracle;
+    create: async (oracle: Oracle, owner?: string) => {
+        const { id, name, description, subscriptionPrice } = oracle;
+        // const allOracles = await oracleDA.finds();
+        // const newId = allOracles[allOracles.length - 1].id * 1 + 1;
         const oracleData = await oracleDA.create({
-            id,
+            id: id || uuidv4(),
             name,
             description,
             subscriptionPrice,

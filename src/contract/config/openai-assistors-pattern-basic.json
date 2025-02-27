@@ -2,6 +2,7 @@
   "id": "2",
   "name": "smart contract buidler",
   "description": "smart contract buidler",
+  "disableMessage": false,
   "assistors": [
     {
       "name": "requirements analyst",
