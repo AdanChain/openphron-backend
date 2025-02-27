@@ -40,14 +40,17 @@ routers.post("/contract/save-error", verifySignatureMiddleware, contractControll
 
 //////////////Oracle Routers/////////////
 
+routers.post("/oracle", verifySignatureMiddleware, oracleController.create);
 routers.get("/oracle", verifySignatureMiddleware, oracleController.gets);
 routers.get("/oracle/:id", verifySignatureMiddleware, oracleController.getById);
 
+routers.post("/question", verifySignatureMiddleware, questionController.create)
 routers.get("/question", verifySignatureMiddleware, questionController.gets)
 routers.get("/question/:id", verifySignatureMiddleware, questionController.getById)
 routers.get("/question/oracle/:oracleId", verifySignatureMiddleware, questionController.questionsForOracle)
-routers.post("/question", verifySignatureMiddleware, questionController.update)
+routers.post("/question/update", verifySignatureMiddleware, questionController.update)
 
+routers.post("/subscribe", verifySignatureMiddleware, subscriptionController.subscribe);
 routers.get("/subscription/user", verifySignatureMiddleware, subscriptionController.getByUser);
 routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscriptionController.getsByOracle);
 

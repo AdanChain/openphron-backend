@@ -2,6 +2,16 @@ import { oracleService } from "../service";
 import { Request, Response } from "express";
 
 const oracleController = {
+    create: async (req: any, res: any) => {
+        try {
+            const oracleData = req.body;
+            const owner = req.user;
+            const oracle = await oracleService.create(oracleData, owner);
+            res.status(200).json(oracle);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     gets: async (req: Request, res: Response): Promise<void> => {
         try {
             const oracleData = await oracleService.gets();
