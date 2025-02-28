@@ -12,9 +12,9 @@ class ApiKeyDA extends BaseDataAccess {
         return data.length > 0 ? data : false;
     }
 
-    async apiKeyExists(apiKey: string | undefined, address: string | undefined): Promise<any> {
+    async apiKeyExists(apiKey: string | undefined): Promise<any> {
         if (!apiKey) return false;
-        const data = await this.findOne({ apiKey, userId: address });
+        const data = await this.findOne({ apiKey });
         return data ? data : false;
     }
 }

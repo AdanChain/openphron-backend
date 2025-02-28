@@ -1,3 +1,4 @@
+import { log } from "console";
 import { oracleDA } from "../data-access";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -27,7 +28,9 @@ const oracleService = {
         const oracleData = await oracleDA.findOne({ id: oracleId, owner: owner })
         return oracleData ? true : false;
     },
-    rename: async (name: string, oracleId: string) => {
+    rename: async (oracleId: string, name: string) => {
+        console.log(name, oracleId);
+
         const oracleData = await oracleDA.update({ id: oracleId }, { name: name })
         return oracleData;
     },

@@ -6,7 +6,7 @@ const apiKeyService = {
         if (!userId) return false;
         const apiKey = generateApiKeyWithCryptoJs(name);
 
-        if (await apiKeyDA.apiKeyExists(apiKey, userId)) {
+        if (await apiKeyDA.apiKeyExists(apiKey)) {
             await apiKeyService.createApiKey(userId, name);
         }
 
@@ -15,7 +15,7 @@ const apiKeyService = {
         return userApiKey;
     },
     deleteApiKey: async (apiKey: string | undefined, userId: string | undefined) => {
-        const apiKeyExists = await apiKeyDA.apiKeyExists(apiKey, userId);
+        const apiKeyExists = await apiKeyDA.apiKeyExists(apiKey);
         if (!apiKeyExists) {
             return false;
         }
@@ -29,8 +29,8 @@ const apiKeyService = {
         }
         return apiKeys;
     },
-    availableApiKey: async (apiKey: string | undefined, address: string | undefined) => {
-        const apiKeyExists = await apiKeyDA.apiKeyExists(apiKey, address);
+    availableApiKey: async (apiKey: string | undefined) => {
+        const apiKeyExists = await apiKeyDA.apiKeyExists(apiKey);
         return apiKeyExists;
     }
 };

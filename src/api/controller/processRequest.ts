@@ -29,7 +29,7 @@ const processRequest = {
         const isOwner = await oracleService.isOwnerById(data.oracleId, address);
         if (!isOwner) throw new Error("You are not owner of this oracle!");
         const isExist = await questionService.isExist(data);
-        if (!isExist){
+        if (!isExist) {
             console.log("create")
             const result = await questionService.create(data);
             return result;
