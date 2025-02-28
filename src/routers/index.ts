@@ -43,6 +43,8 @@ routers.post("/contract/save-error", verifySignatureMiddleware, contractControll
 routers.post("/oracle", verifySignatureMiddleware, oracleController.create);
 routers.get("/oracle", verifySignatureMiddleware, oracleController.gets);
 routers.get("/oracle/:id", verifySignatureMiddleware, oracleController.getById);
+routers.post("/oracle/rename", verifySignatureMiddleware, oracleController.rename);
+routers.delete("/oracle/:id", verifySignatureMiddleware, oracleController.delete);
 
 routers.post("/question", verifySignatureMiddleware, questionController.create)
 routers.get("/question", verifySignatureMiddleware, questionController.gets)

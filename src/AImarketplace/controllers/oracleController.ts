@@ -32,6 +32,25 @@ const oracleController = {
         } catch (error: any) {
             res.status(500).json({ error: error.message });
         }
+    },
+    rename: async (req: any, res: any) => {
+        try {
+            const oracleData = req.body;
+            const owner = req.user;
+            const oracle = await oracleService.rename(oracleData, owner);
+            res.status(200).json(oracle);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+    delete: async (req: any, res: any) => {
+        try {
+            const { id } =  req.params;
+            const oracle = await oracleService.delete(id);
+            res.status(200).json(oracle);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
     }
 }
 

@@ -26,6 +26,14 @@ const oracleService = {
     isOwnerById: async (oracleId: string, owner: string) => {
         const oracleData = await oracleDA.findOne({ id: oracleId, owner: owner })
         return oracleData ? true : false;
+    },
+    rename: async (name: string, oracleId: string) => {
+        const oracleData = await oracleDA.update({ id: oracleId }, { name: name })
+        return oracleData;
+    },
+    delete: async (oracleId: string) => {
+        const oracleData = await oracleDA.delete({ id: oracleId })
+        return oracleData;
     }
 }
 
