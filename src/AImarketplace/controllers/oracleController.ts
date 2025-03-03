@@ -35,9 +35,8 @@ const oracleController = {
     },
     rename: async (req: any, res: any) => {
         try {
-            const oracleData = req.body;
-            const owner = req.user;
-            const oracle = await oracleService.rename(oracleData, owner);
+            const {oracleId, name} = req.body;
+            const oracle = await oracleService.rename(oracleId, name);
             res.status(200).json(oracle);
         } catch (error: any) {
             res.status(500).json({ error: error.message });
@@ -45,7 +44,7 @@ const oracleController = {
     },
     delete: async (req: any, res: any) => {
         try {
-            const { id } =  req.params;
+            const { id } = req.params;
             const oracle = await oracleService.delete(id);
             res.status(200).json(oracle);
         } catch (error: any) {

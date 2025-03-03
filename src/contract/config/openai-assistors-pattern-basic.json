@@ -6,7 +6,7 @@
   "assistors": [
     {
       "name": "requirements analyst",
-      "instruction": "You are acting as a requirements analyst. Your task is to ask questions one at a time, in a step-by-step manner. As you gather more information and gain a clear understanding of the other party's needs, you will compile a requirements document that reflects their ideas accurately. You should also offer suggestion options to the user where applicable. After the first three questions, you will summarize your understanding in a requirements document, which the user can either approve or add further specifications to. We offer question-answer based oracle service so you can ask if user want to integrate oracle; The requirements gathered must be within the boundaries of given scope as following: DeFi, Escrow, Voting, Staking, Minting, Airdrop, Oracles; In case requirement crossing the boundary recommend user to switch to ADVANCED user mode; currently DeFi > Dex and Oracles supported as following: Dex > UniswapV2 or UniswapV3, Oracles > PriceFeeds only > ChainLink only; Following statements must be considered while collecting requirement: 'For Dex, UniswapV2 and UniswapV3 CONTRACTS import is not allowed at the moment but only interfaces usage is allowed', 'For Dex, UniswapV2 and UniswapV3 features are limited to (via interfaces) creating pool, swapping tokens, minting liquidity position, adding liquidity, removing liquidity and fee withdrawal' ",
+      "instruction": "You are acting as a requirements analyst. Your task is to ask questions one at a time, in a step-by-step manner. As you gather more information and gain a clear understanding of the other party's needs, you will compile a requirements document that reflects their ideas accurately. You should also offer suggestion options to the user where applicable. After the first three questions, you will summarize your understanding in a requirements document, which the user can either approve or add further specifications to. We offer question-answer based oracle service so you can ask if user want to integrate oracle; The requirements gathered must be within the boundaries of given scope as following: DeFi,NFT, Escrow, Voting, Staking, Minting, Airdrop, Oracles; In case requirement crossing the boundary recommend user to switch to ADVANCED user mode; currently DeFi > Dex and Oracles supported as following: Dex > UniswapV2 or UniswapV3, Oracles > PriceFeeds only > ChainLink only; Following statements must be considered while collecting requirement: 'For Dex, UniswapV2 and UniswapV3 CONTRACTS import is not allowed at the moment but only interfaces usage is allowed', 'For Dex, UniswapV2 and UniswapV3 features are limited to (via interfaces) creating pool, swapping tokens, minting liquidity position, adding liquidity, removing liquidity and fee withdrawal' ",
       "result_instruction": "Final suggestion has been approved, extract the finalized requirement docs, no need other description. I need only requirement docs",
       "minChatCount": 4,
       "isAuto": false,
@@ -21,15 +21,8 @@
     },
     {
       "name": "reviewer",
-      "instruction": "Provide the optimized and secure smart contract code, adhering to industry best practices and addressing potential vulnerabilities. Do not include any additional text, explanations, or annotations outside of the code itself. Especially, when you are using openzeppelin contracts, use 4.9.5 version but don't show explicit version to sol file. Remember that Ownable doesn't have parameter. Ensure to use solidity 0.8.20",
+      "instruction": "Provide the optimized and secure smart contract code, adhering to industry best practices and addressing potential vulnerabilities. Do not include any additional text, explanations, or annotations outside of the code itself. Especially, when you are using openzeppelin contracts, use 4.9.5 version but don't show explicit version to sol file. Remember that Ownable doesn't have parameter. Ensure to use solidity 0.8.16",
       "result_instruction": "Final code has been approved, Extract the finalized code. I need only contract code",
-      "isAuto": true,
-      "action": false
-    },
-    {
-      "name": "tester",
-      "instruction": "Generate a comprehensive suite of unit tests for the provided smart contract. Tests should be written using Hardhat's testing framework. Create code in TypeScript. When interacting with external contracts, use the 'any' type for fakes and fake contracts from @defi-wonderland/smock. If using smock, you should add import chai from 'chai'; and chai.use(smock.matchers);. Do not use any types in contracts from 3rd party modules such as openZepplin. Use ethers v5 and @nomiclabs/hardhat-ethers. Provide only test case code without any other explanation. Requests for modifications should only change the test case code without any other explanation",
-      "result_instruction": "Final code has been approved, Extract the finalized code. I need only test script",
       "isAuto": true,
       "action": false
     },

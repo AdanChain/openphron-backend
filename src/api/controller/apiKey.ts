@@ -34,7 +34,7 @@ const apiKeyController = {
         try {
             const address = req.user;
             const { apiKey } = req.body;
-            const result = await apiKeyService.availableApiKey(apiKey, address);
+            const result = await apiKeyService.availableApiKey(apiKey);
             res.status(200).json({ status: "success", data: result });
         } catch (error: any) {
             res.status(500).json({ status: "error", message: error.message, });
