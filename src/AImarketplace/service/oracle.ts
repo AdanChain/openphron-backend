@@ -1,3 +1,4 @@
+import { log } from "console";
 import { oracleDA } from "../data-access";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -5,7 +6,8 @@ const oracleService = {
     create: async (oracle: Oracle, owner?: string) => {
         const { id, name, description, subscriptionPrice } = oracle;
         // const allOracles = await oracleDA.finds();
-        // const newId = allOracles[allOracles.length - 1].id * 1 + 1;
+        // const newId = allOracles.length === 0 ? 0 : allOracles[allOracles.length - 1].id * 1 + 1;
+
         const oracleData = await oracleDA.create({
             id: id || uuidv4(),
             name,
@@ -26,6 +28,16 @@ const oracleService = {
     isOwnerById: async (oracleId: string, owner: string) => {
         const oracleData = await oracleDA.findOne({ id: oracleId, owner: owner })
         return oracleData ? true : false;
+    },
+    rename: async (oracleId: string, name: string) => {
+        console.log(name, oracleId);
+
+        const oracleData = await oracleDA.update({ id: oracleId }, { name: name })
+        return oracleData;
+    },
+    delete: async (oracleId: string) => {
+        const oracleData = await oracleDA.delete({ id: oracleId })
+        return oracleData;
     }
 }
 

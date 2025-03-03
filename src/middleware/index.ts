@@ -40,16 +40,16 @@ export const verifyAdmin = async (req: any, res: any, next: any) => {
 export const verifyApiKeyMiddleware = async (req: any, res: any, next: any) => {
     try {
         const { apiKey } = req.query;
-        const address = req.headers.authentication;
-        if (!apiKey || !address) {
+        // const address = req.headers.authentication;
+        if (!apiKey) {
             return res.status(401).json({ success: false, error: 'Authentication required' });
         }
-        const apiKeyData = await apiKeyService.availableApiKey(apiKey, address);
+        const apiKeyData = await apiKeyService.availableApiKey(apiKey);
         if (!apiKeyData) {
             return res.status(401).json({ success: false, error: 'Invalid API key' });
         }
         req.apiKey = apiKey;
-        req.user = address;
+        req.user = apiKeyData.userId;
         next();
         return;
     } catch (error: any) {

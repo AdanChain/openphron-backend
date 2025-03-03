@@ -1,4 +1,4 @@
-import { sign } from "../../utils";
+import { getUpdatedTime, sign } from "../../utils";
 import { oracleDA, subscriptionDA } from "../data-access";
 
 const subscriptionService = {
@@ -8,7 +8,7 @@ const subscriptionService = {
             const subscribed = await subscriptionDA.findOne({ user, userContract, oracleId })
             console.log('subscribed', subscribed);
             const oracle = await oracleDA.findOne({ id: oracleId });
-            const expire = subscriptionService.getExpireTime(30);
+            const expire = getUpdatedTime(30);
             // let subscriptionData;
             // if (!subscribed) {
             //     subscriptionData = await subscriptionDA.create({
@@ -23,16 +23,13 @@ const subscriptionService = {
             //     subscriptionData = await subscriptionDA.findOne({ user, userContract, oracleId })
             // }
             const signature = await sign({
-                oracleId,
-                userContract,
-                price: oracle.subscriptionPrice,
-                expire,
-                owner: oracle.owner
+                types: ['string', 'address', 'uint256', 'uint256', 'address'],
+                values: [oracleId, userContract, Number(oracle.subscriptionPrice), expire, oracle.owner]
             });
             const data = {
-                oracleId,
+                oracleId: oracleId,
                 userContract,
-                price: oracle.subscriptionPrice,
+                price: Number(oracle.subscriptionPrice),
                 expire,
                 ower: oracle.owner,
                 signature
@@ -49,9 +46,6 @@ const subscriptionService = {
     getsByOracle: async (oracleId: string) => {
         const subscriptionData = await subscriptionDA.finds({ oracleId: oracleId })
         return subscriptionData;
-    },
-    getExpireTime: (days: number): number => {
-        return Math.floor(Date.now() / 1000) + days * 24 * 60 * 60;
     }
 }
 

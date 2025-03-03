@@ -1,3 +1,4 @@
+import { types } from "util";
 import { oracleService, questionService } from "../../AImarketplace/service";
 import { sign } from "../../utils";
 
@@ -29,7 +30,7 @@ const processRequest = {
         const isOwner = await oracleService.isOwnerById(data.oracleId, address);
         if (!isOwner) throw new Error("You are not owner of this oracle!");
         const isExist = await questionService.isExist(data);
-        if (!isExist){
+        if (!isExist) {
             console.log("create")
             const result = await questionService.create(data);
             return result;
@@ -46,7 +47,11 @@ const processRequest = {
             const { questionId } = req.params;
             if (!questionId) throw new Error("QuestionId is not found!");
             const data = await questionService.getById(questionId);
-            const signature = await sign(data)
+            if (!data) throw new Error("Question is not found!");
+            const signature = await sign({
+                types: ['string', 'string', 'string', 'string', 'uint256'],
+                values: [data.id, data.oracleId, data.question, data.answer, data.updatedAt]
+            })
             let questionInfo = {
                 questionId: data.id,
                 oracleId: data.oracleId,
