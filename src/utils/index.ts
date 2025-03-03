@@ -10,13 +10,16 @@ export const sign = async (data: any) => {
     try {
         const signer = getSigner();
         if (!signer) throw new Error("Signer is invalid!");
-        let keys = Object.keys(data);
-        let values = keys.map(key => data[key]);
-        const messageHash = ethers.utils.solidityKeccak256(keys.map(key => typeof key), values);
+        const messageHash = ethers.utils.solidityKeccak256(data.types, data.values);
         const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
+        console.log({ data }, { signature })
         return signature;
     } catch (error: any) {
         console.log("Error signing: ", error.message);
         return null;
     }
+}
+
+export const getUpdatedTime = (days: number): number => {
+    return Math.floor(Date.now() / 1000) + days * 24 * 60 * 60;
 }

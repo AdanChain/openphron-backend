@@ -17,10 +17,7 @@ const QuestionSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    updatedAt: {
-        type: Date,
-        default: Date.now
-    }
+    updatedAt: Number
 })
 
 const QuestionModel = mongoose.model("questions", QuestionSchema);
