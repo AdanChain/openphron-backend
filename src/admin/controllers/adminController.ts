@@ -36,6 +36,23 @@ const adminController = {
             res.status(500).json({ error: error.message });
         }
     },
+    getAdminAddress: async (req: any, res: any) => {
+        try {
+            const adminAddress = await adminService.getAdminAddress();
+            res.status(200).json(adminAddress);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
+    getDeployedContracts:async (req: any, res: any) => {
+        try {
+            const contracts = await adminService.getDeployedContracts();
+            res.status(200).json(contracts);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     
     getSharedContracts: async (req: any, res: any) => {
         try {
@@ -55,6 +72,17 @@ const adminController = {
         }
     },
 
+    addAdminAddress: async (req: any, res: any) => {
+        try {
+            const {address} = req.body;
+            console.log(address);
+            const adminAddress = await adminService.addAdminAddress(address);
+            res.status(200).json(adminAddress);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    },
+
     deleteUser: async (req: any, res: any) => {
         try {
             const {address} = req.params;
@@ -68,12 +96,21 @@ const adminController = {
     deleteError: async (req: any, res: any) => {
         try {
             const {contractId,errorId,errorType} = req.body;
-            console.log(contractId,errorId,errorType);
             const error = await adminService.deleteError(contractId,errorId,errorType);
             res.json(error);
         } catch (error: any) {
             res.status(500).json({ error: error.message });
             
+        }
+    },
+
+    deleteAdminAddress: async (req: any, res: any) => {
+        try {
+            const {address} = req.params;
+            const adminAddress = await adminService.deleteAdminAddress(address);
+            res.status(200).json(adminAddress);
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
         }
     }
 };

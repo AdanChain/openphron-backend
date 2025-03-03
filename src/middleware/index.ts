@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { apiKeyService } from "../api/service";
+import { adminAddressDA } from "../contract/data-access";
 
 export const verifySignatureMiddleware = (req: any, res: any, next: any) => {
     try {
@@ -19,26 +20,20 @@ export const verifySignatureMiddleware = (req: any, res: any, next: any) => {
     }
 };
 
-const ADMIN_ADDRESSES = process.env.ADMIN_ADDRESSES ? process.env.ADMIN_ADDRESSES.split(',') : [];
-
 export const verifyAdmin = async (req: any, res: any, next: any) => {
     try {
-        const authentication = req.headers.authentication;
-        if (!authentication) {
-            throw new Error("No authentication header found!");
-        }
-        const { address } = JSON.parse(authentication);
-        const userAddress = address;
-        if (!userAddress) {
-            return res.json({ success:false, error: 'Authentication required' });
-        }
+        const address = req.user;
+        const defaultAdminAddress = process.env.ADMIN_ADDRESS;
+        const adminAddressData = await adminAddressDA.finds();
+        const adminAddresses = adminAddressData.map((address: any) => address.adminAddress);
+        adminAddresses.push(defaultAdminAddress)
 
-        if (!ADMIN_ADDRESSES.includes(userAddress)) {
-            return res.json({ success:false, error: 'Admin access required' });
+        if (!adminAddresses.includes(address)) {
+            throw new Error("Invalid admin Fsignature!");
         }
         next();
     } catch (error: any) {
-        res.json({ error: error.message });
+        res.status(403).json({ error: error.message });
     }
 };
 
@@ -64,9 +59,9 @@ export const verifyApiKeyMiddleware = async (req: any, res: any, next: any) => {
 
 export const updateFeedsMiddleware = async (req: any, res: any, next: any) => {
     try {
-        
+
     } catch (error: any) {
-        res.json({error: error.message})
+        res.json({ error: error.message })
         console.log("Error updating Feeds: ", error.message)
     }
 }

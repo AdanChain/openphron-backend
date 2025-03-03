@@ -1,7 +1,8 @@
-import { costDA, shareContractsDA, userContractsDA } from "../../contract/data-access";
+import { adminAddressDA, costDA, deployedContractsDA, shareContractsDA, userContractsDA } from "../../contract/data-access";
 import { BlockNumberModel } from "../../AImarketplace/models";
 import userContractDA from "../../contract/data-access/userContractDA";
 import { apiKeyDA } from "../../api/data-access";
+import { create } from "domain";
 
 interface User {
     userAddress: string;
@@ -81,13 +82,43 @@ const adminService = {
             throw new Error(`Error getting api keys: ${error.message}`);
         }
     },
+    getAdminAddress: async () => {
+        try {
+            const adminAddress = await adminAddressDA.finds();
+            return adminAddress.map((address: any) => ({
+                id: address._id,
+                address: address.adminAddress,
+                createdAt:address.createdAt             
+            }));
+        } catch (error: any) {
+            throw new Error(`Error getting admin address: ${error.message}`);
+        }
+    },
 
-    // Get error logs (from the last 24 hours)
+    getDeployedContracts:async() => {
+        try {
+            const contracts = await deployedContractsDA.finds();
+            return contracts.map((contract: any) => ({
+                id: contract._id,
+                userAddress: contract.userAddress,
+                contractAddress: contract.address,
+                chainId: contract.chainId,
+                abi: [...contract.abi],
+                contractId:contract.contractId,
+                createdAt:contract.createdAt,
+                contractName:""
+            }));
+        } catch (error: any) {
+            throw new Error(`Error getting deployed contracts: ${error.message}`);
+        }
+    },
+
     updateContracts: async () => {
         try {
             const contracts = await userContractsDA.finds();
             return contracts.map((contract: any) => ({
                 id: contract._id,
+                contractId:contract.id,
                 compileError: [...contract.compileError],
                 testError: [...contract.testError],
                 name: contract.name,
@@ -127,6 +158,14 @@ const adminService = {
             throw new Error(`Error adding user: ${error.message}`);
         }
     },
+    addAdminAddress: async (address: string) => {
+        try {
+            const result = await adminAddressDA.addAddress(address);
+            return result;
+        } catch (error: any) {
+            throw new Error(`Error adding admin address: ${error.message}`);
+        }
+    },
     
     deleteUser: async (address: string) => {
         try {
@@ -134,6 +173,17 @@ const adminService = {
             return result;
         } catch (error: any) {
             throw new Error(`Error deleting user: ${error.message}`);
+        }
+    },
+
+    deleteAdminAddress: async (address: string) => {
+        try {
+            const data = {adminAddress:address}
+            const result = await adminAddressDA.delete(data);
+            console.log("result",result);
+            return result;
+        } catch (error: any) {
+            throw new Error(`Error deleting admin address: ${error.message}`);
         }
     },
 

@@ -55,7 +55,7 @@ routers.get("/subscription/user", verifySignatureMiddleware, subscriptionControl
 routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscriptionController.getsByOracle);
 
 // Add admin routes
-routers.use('/admin', verifyAdmin,adminRoutes);
+routers.use('/admin',verifySignatureMiddleware, verifyAdmin,adminRoutes);
 
 ///////////API Routers///////////////
 routers.post('/key', verifySignatureMiddleware, apiKeyController.createApiKey);
