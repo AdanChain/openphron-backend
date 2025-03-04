@@ -10,8 +10,8 @@ const apiKeyService = {
             await apiKeyService.createApiKey(userId, name);
         }
 
-        const createdAt = formatDate(new Date());
-        const userApiKey = await apiKeyDA.create({ userId, name, apiKey, createdAt });
+        // const createdAt = formatDate(new Date());
+        const userApiKey = await apiKeyDA.create({ userId, name, apiKey });
         return userApiKey;
     },
     deleteApiKey: async (apiKey: string | undefined, userId: string | undefined) => {

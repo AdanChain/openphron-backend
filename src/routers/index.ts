@@ -5,7 +5,7 @@ import {
   subscriptionController,
 } from "../AImarketplace/controllers";
 import { contractController, workflowContoller } from "../contract/controllers";
-import { verifySignatureMiddleware } from "../middleware";
+import { verifyAdmin, verifySignatureMiddleware } from "../middleware";
 import costController from "../contract/controllers/cost";
 import adminRoutes from '../admin/routes';
 import apiRouter from "../api/routes";
@@ -57,7 +57,7 @@ routers.get("/subscription/user", verifySignatureMiddleware, subscriptionControl
 routers.get("/subscription/oracle/:oracleId", verifySignatureMiddleware, subscriptionController.getsByOracle);
 
 // Add admin routes
-routers.use('/admin', adminRoutes);
+routers.use('/admin',verifySignatureMiddleware, verifyAdmin,adminRoutes);
 
 ///////////API Routers///////////////
 routers.post('/key', verifySignatureMiddleware, apiKeyController.createApiKey);
