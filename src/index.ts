@@ -14,6 +14,7 @@ app.use(cors({ origin: "*" }));
 
 const PORT = process.env.PORT;
 const OPENPHRON_UPDATEDATA_URL = process.env.OPENPHRON_UPDATEDATA_URL;
+const OPENPHRON_UPDATEFEEDS_URL = process.env.OPENPHRON_UPDATEFEEDS_URL;
 
 const main = async () => {
     try {
@@ -24,7 +25,8 @@ const main = async () => {
         await workflowController.initConfig();
 
         app.use("/api", routers);
-        app.use(`/${OPENPHRON_UPDATEDATA_URL}`, apiRouter)
+        app.use(`/${OPENPHRON_UPDATEDATA_URL}`, apiRouter);
+        app.use(`/${OPENPHRON_UPDATEFEEDS_URL}`, apiRouter);
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}.`);

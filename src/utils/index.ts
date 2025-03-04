@@ -12,7 +12,6 @@ export const sign = async (data: any) => {
         if (!signer) throw new Error("Signer is invalid!");
         const messageHash = ethers.utils.solidityKeccak256(data.types, data.values);
         const signature = await signer.signMessage(ethers.utils.arrayify(messageHash));
-        console.log({ data }, { signature })
         return signature;
     } catch (error: any) {
         console.log("Error signing: ", error.message);
