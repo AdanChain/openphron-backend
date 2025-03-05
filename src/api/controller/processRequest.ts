@@ -48,19 +48,11 @@ const processRequest = {
             if (!questionId) throw new Error("QuestionId is not found!");
             const data = await questionService.getById(questionId);
             if (!data) throw new Error("Question is not found!");
-            const signature = await sign({
-                types: ['string', 'string', 'string', 'string', 'uint256'],
-                values: [data.id, data.oracleId, data.question, data.answer, data.updatedAt]
-            })
-            let questionInfo = {
-                questionId: data.id,
-                oracleId: data.oracleId,
-                question: data.question,
-                answer: data.answer,
-                updatedAt: data.updatedAt,
-                signature: signature
-            }
-            res.json(questionInfo)
+            const encodedData = await sign({
+                types: ['uint256', 'uint256', 'string', 'uint256'],
+                values: [Number(data.id), Number(data.oracleId), data.answer, data.updatedAt]
+            }, false)
+            res.json(encodedData)
         } catch (error: any) {
             res.json({ success: false, error: error.message })
         }

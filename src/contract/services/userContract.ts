@@ -157,7 +157,7 @@ const userContractService = {
   },
   addDeployedContract: async (data: any) => {
     const userContract = await DeployedContracts.create({ ...data });
-    //deployedContractsDA.create(data);
+    // const userContract = await deployedContractsDA.create(data);
 
     return userContract;
   },
