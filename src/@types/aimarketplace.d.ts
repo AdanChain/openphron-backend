@@ -14,6 +14,7 @@ interface QuestionTransaction {
         oracleId: string;
         question: string;
         answer: string;
+        updatedAt: number;
     };
 }
 
@@ -21,7 +22,7 @@ interface SubscriptionTransaction {
     args: {
         user: string;
         userContract: string;
-        oracleId: string;
+        oracleId: number;
         expire: Date;
     };
 }

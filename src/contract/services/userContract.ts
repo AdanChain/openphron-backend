@@ -9,7 +9,6 @@ import { DeployedContracts } from '../models';
 const userContractService = {
   create: async (data: CreateContractData) => {
     const { userAddress, initMessage, chatMode } = data;
-    console.log(initMessage, chatMode);
 
     const contractName = await assistorService.nameFromText(
       initMessage,
@@ -157,9 +156,8 @@ const userContractService = {
     await userContractsDA.create(_contract);
   },
   addDeployedContract: async (data: any) => {
-    console.log(data);
     const userContract = await DeployedContracts.create({ ...data });
-    //deployedContractsDA.create(data);
+    // const userContract = await deployedContractsDA.create(data);
 
     return userContract;
   },

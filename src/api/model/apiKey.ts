@@ -5,7 +5,7 @@ const UserApiKeysSchema = new Schema({
     name: String,
     apiKey: String,
     status: { type: String, default: 'active' },
-    createdAt: String,
+    createdAt: { type: Date, default: new Date() },
 });
 
 const ApiKeyModel = model('ApiKey', UserApiKeysSchema);

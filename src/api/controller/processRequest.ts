@@ -1,3 +1,4 @@
+import { types } from "util";
 import { oracleService, questionService } from "../../AImarketplace/service";
 import { sign } from "../../utils";
 
@@ -46,16 +47,12 @@ const processRequest = {
             const { questionId } = req.params;
             if (!questionId) throw new Error("QuestionId is not found!");
             const data = await questionService.getById(questionId);
-            const signature = await sign(data)
-            let questionInfo = {
-                questionId: data.id,
-                oracleId: data.oracleId,
-                question: data.question,
-                answer: data.answer,
-                updatedAt: data.updatedAt,
-                signature: signature
-            }
-            res.json(questionInfo)
+            if (!data) throw new Error("Question is not found!");
+            const encodedData = await sign({
+                types: ['uint256', 'uint256', 'string', 'uint256'],
+                values: [Number(data.id), Number(data.oracleId), data.answer, data.updatedAt]
+            }, false)
+            res.json(encodedData)
         } catch (error: any) {
             res.json({ success: false, error: error.message })
         }

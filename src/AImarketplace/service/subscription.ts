@@ -1,40 +1,38 @@
-import { sign } from "../../utils";
+import { getUpdatedTime, sign } from "../../utils";
 import { oracleDA, subscriptionDA } from "../data-access";
+import { v4 as uuidv4 } from 'uuid';
 
 const subscriptionService = {
+    create: async (subscription: any )=> {
+        try {
+            const { user, userContract, oracleId, expire } = subscription;
+            const newData = {
+                id: uuidv4(),
+                user, userContract, oracleId, expire,
+            }
+            await subscriptionDA.create(newData);
+            return newData;
+        } catch (error: any) {
+            console.log('Error creating subscription: ', error.message);
+        }
+    },
     subscribe: async (subscription: any) => {
         try {
             const { user, userContract, oracleId } = subscription;
             const subscribed = await subscriptionDA.findOne({ user, userContract, oracleId })
             console.log('subscribed', subscribed);
             const oracle = await oracleDA.findOne({ id: oracleId });
-            const expire = subscriptionService.getExpireTime(30);
-            // let subscriptionData;
-            // if (!subscribed) {
-            //     subscriptionData = await subscriptionDA.create({
-            //         id: user + userContract + oracleId,
-            //         user,
-            //         userContract,
-            //         oracleId,
-            //         expire
-            //     });
-            // } else {
-            //     await subscriptionDA.update({ user, userContract, oracleId }, { expire });
-            //     subscriptionData = await subscriptionDA.findOne({ user, userContract, oracleId })
-            // }
+            const expire = getUpdatedTime(30);
             const signature = await sign({
-                oracleId,
-                userContract,
-                price: oracle.subscriptionPrice,
-                expire,
-                owner: oracle.owner
+                types: ['uint256', 'address', 'uint256', 'uint256', 'address'],
+                values: [Number(oracleId), userContract, Number(oracle.subscriptionPrice) * 1e18, expire, oracle.owner]
             });
             const data = {
-                oracleId,
+                oracleId: Number(oracleId),
                 userContract,
-                price: oracle.subscriptionPrice,
+                price: Number(oracle.subscriptionPrice) * 1e18,
                 expire,
-                ower: oracle.owner,
+                owner: oracle.owner,
                 signature
             }
             return data;
@@ -49,9 +47,6 @@ const subscriptionService = {
     getsByOracle: async (oracleId: string) => {
         const subscriptionData = await subscriptionDA.finds({ oracleId: oracleId })
         return subscriptionData;
-    },
-    getExpireTime: (days: number): number => {
-        return Math.floor(Date.now() / 1000) + days * 24 * 60 * 60;
     }
 }
 

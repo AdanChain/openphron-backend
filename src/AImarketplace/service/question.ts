@@ -1,16 +1,19 @@
+import { getUpdatedTime } from "../../utils";
 import { questionDA } from "../data-access";
 import { v4 as uuidv4 } from 'uuid';
 
 const questionService = {
     create: async (data: any) => {
-        const { id, oracleId, question, answer } = data;
-        // const allQuestions = await questionDA.finds();
-        // const newId = allQuestions[allQuestions.length - 1].id * 1 + 1;
+        const { oracleId, question, answer } = data;
+        const allQuestions = await questionDA.finds();
+        const newId = allQuestions.length === 0 ? 1 : allQuestions[allQuestions.length - 1].id * 1 + 1;
+
         const questionData = await questionDA.create({
-            id: id || uuidv4(),
+            id: newId.toString(),
             oracleId,
             question,
             answer,
+            updatedAt: getUpdatedTime(0)
         })
         return questionData;
     },
@@ -19,13 +22,13 @@ const questionService = {
         return questionData;
     },
     update: async (data: any) => {
-        const { id, oracleId, question, answer } = data;
+        const { id, oracleId, question, answer, updatedAt = getUpdatedTime(0) } = data;
         const questionData = await questionDA.update({ id: id }, {
             id,
             oracleId,
             question,
             answer,
-            timestamp: new Date()
+            updatedAt
         })
         return questionData;
     },

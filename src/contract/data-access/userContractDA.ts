@@ -87,7 +87,7 @@ class UserContractDA extends BaseDataAccess {
             const result = await this.update({ _id: id }, { $pull: { testError: { _id: errorId } } });
             return "success";
         } catch (error) {
-
+            console.log("Error deleting error:", error);
         }
     }
 }
