@@ -6,7 +6,7 @@ const oracleService = {
     create: async (oracle: Oracle, owner?: string) => {
         const { name, description, subscriptionPrice } = oracle;
         const allOracles = await oracleDA.finds();
-        const newId = allOracles.length === 0 ? 0 : allOracles[allOracles.length - 1].id * 1 + 1;
+        const newId = allOracles.length === 0 ? 1 : allOracles[allOracles.length - 1].id * 1 + 1;
 
         const oracleData = await oracleDA.create({
             id: newId.toString(),

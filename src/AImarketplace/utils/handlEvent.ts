@@ -31,7 +31,6 @@ const handleEvent = async (props: HandleEventProps): Promise<void> => {
             if (err.reason === "missing response") {
                 console.log("You seem offline");
             } else {
-                console.log("handleEvent error", err);
                 console.log(`handleEvent error ${id}`, event, err.reason);
             }
         }

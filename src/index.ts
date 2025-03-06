@@ -26,7 +26,6 @@ const main = async () => {
 
         app.use("/api", routers);
         app.use(`/${OPENPHRON_UPDATEDATA_URL}`, apiRouter);
-        app.use(`/${OPENPHRON_UPDATEFEEDS_URL}`, apiRouter);
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}.`);

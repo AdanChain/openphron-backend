@@ -6,7 +6,7 @@ const questionService = {
     create: async (data: any) => {
         const { oracleId, question, answer } = data;
         const allQuestions = await questionDA.finds();
-        const newId = allQuestions.length === 0 ? 0 : allQuestions[allQuestions.length - 1].id * 1 + 1;
+        const newId = allQuestions.length === 0 ? 1 : allQuestions[allQuestions.length - 1].id * 1 + 1;
 
         const questionData = await questionDA.create({
             id: newId.toString(),
