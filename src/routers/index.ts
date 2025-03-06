@@ -8,7 +8,6 @@ import { contractController, workflowContoller } from "../contract/controllers";
 import { verifySignatureMiddleware } from "../middleware";
 import costController from "../contract/controllers/cost";
 import adminRoutes from '../admin/routes';
-import apiRouter from "../api/routes";
 import { apiKeyController } from "../api/controller";
 const routers = express.Router();
 

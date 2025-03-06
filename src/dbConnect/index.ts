@@ -8,6 +8,7 @@ const dbConnect = async (dbName: string = process.env.DBNAME || "defaultDB") => 
         const BaseURI = "mongodb://127.0.0.1:27017/"
         await mongoose.connect(BaseURI + dbName);
         console.log("Connected to MongoDB");
+        return;
     } catch (error: any) {
         console.log(error);
     }
