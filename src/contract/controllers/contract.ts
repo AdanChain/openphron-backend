@@ -1,6 +1,4 @@
-import { response } from "express";
 import userContractService from "../services/userContract";
-import { access } from "fs";
 
 const contractController = {
   sendInitMessage: async (req: any, res: any): Promise<void> => {
