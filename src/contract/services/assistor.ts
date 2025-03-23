@@ -5,6 +5,7 @@ import { gemini } from "../utils";
 import costService from "./cost";
 import workflowService from "./workflow";
 import path from "path";
+import { log } from "console";
 
 const assistorService = {
     nameFromText: async (text: string, address: string): Promise<string> => {
@@ -17,13 +18,14 @@ const assistorService = {
     },
 
     generateText: async (data: GenerateTextData): Promise<string> => {
+
         const { workflowId, stepId, history } = data;
         const assistor = await assistorService._getAssistor({ workflowId, stepId });
         //bring the package.json file
         // const packageJson = assistorService._getPackageJson();
         // const instruction = stepId === 0 ? `${assistor.instruction}` : `You are using the following package.json file: ${packageJson}\n${assistor.instruction}`;
         // console.log(instruction);
-        const result = await gemini.generateText({ contents: history, instruction:assistor.instruction });
+        const result = await gemini.generateText({ contents: history, instruction: assistor.instruction });
         return result;
     },
 
@@ -37,6 +39,7 @@ const assistorService = {
         };
 
         const result = await gemini.generateText({ contents: [...history, extractMessage], instruction: assistor.instruction });
+
         return result;
     },
 

@@ -64,6 +64,7 @@ const userContractService = {
       role: "assistant",
       content: response
     }
+
     await userContractsDA.addMessage({ _id, stepId, message: responseMessage });
     return { responseMessage };
   },
@@ -195,6 +196,25 @@ const userContractService = {
     }).sort({ createdAt: 1 });
 
     return userDeployedContracts;
+  },
+  generateRequiremntDoc: async (data: AddMessageData) => {
+    const { _id, stepId, content } = data;
+
+    const message = {
+      role: "user",
+      content,
+    };
+    
+    const userContract = await userContractsDA.findOne({ _id });
+    userContract.steps[stepId].history.push(message);
+
+    const response = await assistorService.generateText({
+      workflowId: userContract.workflowId,
+      stepId,
+      history: userContract.steps[stepId].history,
+    });
+
+    return { response };
   },
 };
 

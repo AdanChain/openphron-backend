@@ -21,7 +21,12 @@ const contractController = {
       const userAddress = req.user;
       const { _id, stepId, content } = req.body;
       const response = await userContractService.addMessage({ _id, stepId, content, userAddress });
-      res.json(response);
+      const extractInstruction = 'Generate a basic requirement doc(contract code) based on historys.'
+      const previewResult = await userContractService.generateRequiremntDoc({ _id, stepId, content: extractInstruction, userAddress });
+      console.log(previewResult);
+
+      res.json({ question: response, doc: previewResult.response });
+      // res.json(response);
     } catch (error: any) {
       console.log("send-message-error: ", error.message);
       res.json(error.message);
